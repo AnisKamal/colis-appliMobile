@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeId"
+        android:title="Home"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_home_24"
+        />
+    <item
+        android:id="@+id/chatId"
+        android:title="Chat"
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_chat_24"
+        />
+    <item
+        android:id="@+id/luggage"
+        android:title="Luggage"
+        android:icon="@drawable/ic_outline_luggage_24"
+        />
+    <item
+        android:id="@+id/notification"
+        android:title="Notification"
+        android:icon="@drawable/ic_outline_notifications_24"
+        />
+    <item
+    android:id="@+id/setting"
+    android:title="Setting"
+    android:icon="@drawable/ic_outline_settings_24"
+    />
+
+</menu>
