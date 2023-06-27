@@ -1,11 +1,12 @@
 package com.colis.colis_mobile.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
 
 
-public class PostModel {
+public class PostModel  implements Serializable {
 
     private  String lieuDepart ;
 

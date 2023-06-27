@@ -1,27 +1,23 @@
 package com.colis.colis_mobile;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.colis.colis_mobile.models.PostModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +40,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         PostModel post1 = new PostModel(
                 "Paris",
@@ -74,106 +71,35 @@ public class HomeFragment extends Fragment {
         postModelList.add(post1);
         postModelList.add(post2);
 
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        myList = view.findViewById(R.id.listPost);
 
-        listPersonne(postModelList, view );
+        ListPostAdapter adapter = new ListPostAdapter(postModelList, getContext());
+
+        myList.setAdapter(adapter);
+
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PostModel selectedPost = (PostModel) parent.getItemAtPosition(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("selectedPost", selectedPost);
+                DetailTrajetFragment detailTrajetFragment= new DetailTrajetFragment();
+                detailTrajetFragment.setArguments(bundle);
+                replaceFragment(detailTrajetFragment);
+            }
+        });
 
         return view;
-    }
-
-    public void clickPost(View view){
 
     }
 
-    public void listPersonne(List<PostModel> postModelList , View view ) {
 
-        for(PostModel postModel : postModelList){
-
-            listLayout = (LinearLayout) view.findViewById(R.id.listPostLayout)  ;
-
-            myList = (ListView) view.findViewById(R.id.listPost);
-
-
-
-            LinearLayout infoLayout = new LinearLayout(getActivity());
-
-//            ItemPostModel viewModel = new ViewModelProvider(requireActivity()).get(ItemPostModel.class);
-//
-//            viewModel.selectedPost(postModel);
-
-            infoLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            infoLayout.setOrientation(LinearLayout.HORIZONTAL);
-
-            // infoLayout.setId();
-
-
-            // profile  Image info
-
-            ImageView profilImage = new ImageView(getActivity());
-            profilImage.setImageResource(R.drawable.utilisateur);
-            profilImage.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
-            profilImage.setPadding(10, 0, 0 , 0);
-
-            // nom , depart -> Arrivee , date depart
-
-            // TODO:  ajouter le poids restant
-
-            TextView infoText = new TextView(getActivity()) ;
-            String myDate = LocalDate.now().toString();
-            infoText.setText("Anis Kamal \n" +
-                    postModel.getLieuDepart()+ "->" + postModel.getLieuDestination() + "\n"+
-                    postModel.getDateDepart()
-            );
-            infoText.setTextSize(20);
-            infoText.setPadding(10 , 0 , 0 , 0);
-            infoText.setTextColor(Color.BLACK);
-            infoText.setLayoutParams(new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            // Prix
-
-            TextView prixText = new TextView(getActivity()) ;
-            prixText.setText(postModel.getPrix().toString() + " " + postModel.getDevise() + "/Kg" );
-            prixText.setTextSize(20);
-            prixText.setTextColor(ContextCompat.getColor(getActivity(), R.color.green_1)) ;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 30 , 0 , 0 );
-            prixText.setLayoutParams(params);
-
-
-            // ajout des élèments
-
-            infoLayout.addView(profilImage);
-            infoLayout.addView(infoText);
-            infoLayout.addView(prixText);
-
-
-            listLayout.addView(infoLayout);
-
-
-//            infoLayout.setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View view) {
-//                    DetailTrajetFragment detailTrajetFragment = new DetailTrajetFragment();
-//                    FragmentTransaction fm = getActivity().getSupportFragmentManager().beginTransaction();
-//                    fm.replace(R.id.container,detailTrajetFragment );
-//                }
-//            });
-
-
-
-//            infoLayout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                   // Toast.makeText(getActivity() , "click ok ", Toast.LENGTH_SHORT).show();
-//                   // Intent intent = new Intent(getActivity(), DetailTrajetFragment.class);
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.container, DetailTrajetFragment).commit();
-//
-//                    FragmentManager fragmentManager = getSupportFragmentManager();
-//                }
-//            });
-
-        }
-
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

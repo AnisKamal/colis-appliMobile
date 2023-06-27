@@ -98,7 +98,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
                 android:text="Rechercher"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:id="@+id/search_button"/>
 
             <LinearLayout
                 android:id="@+id/listPostLayout"
