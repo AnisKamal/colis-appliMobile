@@ -24,10 +24,12 @@ public class PostModel  implements Serializable {
 
     private int poidRestant ;
 
+    private String description;
+
     public PostModel() {
     }
 
-    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant) {
+    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description) {
         this.lieuDepart = lieuDepart;
         this.dateDepart = dateDepart;
         this.lieuDestination = lieuDestination;
@@ -36,6 +38,15 @@ public class PostModel  implements Serializable {
         this.devise = devise;
         this.poidInitial = poidInitial;
         this.poidRestant = poidRestant;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getLieuDepart() {

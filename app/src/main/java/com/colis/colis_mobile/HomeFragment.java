@@ -50,7 +50,8 @@ public class HomeFragment extends Fragment {
                 20d,
                 "EUR",
                 20,
-                20
+                20,
+                "Faite attention a vos colis"
         );
 
 
@@ -63,13 +64,27 @@ public class HomeFragment extends Fragment {
                 20d,
                 "EUR",
                 20,
-                20
+                20,
+                "test description "
+        );
+
+        PostModel post3 = new PostModel(
+                "Casablanca",
+                LocalDateTime.now(),
+                "Bamako",
+                LocalDateTime.now(),
+                40d,
+                "USD",
+                10,
+                5,
+                " "
         );
 
         List<PostModel> postModelList = new ArrayList<>();
 
         postModelList.add(post1);
         postModelList.add(post2);
+        postModelList.add(post3);
 
         myList = view.findViewById(R.id.listPost);
 
