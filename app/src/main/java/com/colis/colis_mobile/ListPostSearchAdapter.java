@@ -20,12 +20,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class ListPostAdapter extends BaseAdapter {
+public class ListPostSearchAdapter extends BaseAdapter {
 
     private List<PostModel> listPost;
     private Context context;
 
-    public ListPostAdapter(List<PostModel> listPost, Context context) {
+    public ListPostSearchAdapter(List<PostModel> listPost, Context context) {
         this.listPost = listPost;
         this.context = context;
     }
@@ -54,10 +54,7 @@ public class ListPostAdapter extends BaseAdapter {
         PostModel postModel = listPost.get(position);
 
         LinearLayout infoLayout = new LinearLayout(context);
-        
-//            ItemPostModel viewModel = new ViewModelProvider(requireActivity()).get(ItemPostModel.class);
-//
-//            viewModel.selectedPost(postModel);
+
 
         infoLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         infoLayout.setOrientation(LinearLayout.HORIZONTAL);

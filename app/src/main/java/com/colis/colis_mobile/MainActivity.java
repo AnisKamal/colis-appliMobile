@@ -33,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
                  int id = item.getItemId();
                 if(id == R.id.homeId) replaceFragment(new HomeFragment());
-                else if (id == R.id.chatId) {
-                    System.out.println("messagerie ! ");
-                    replaceFragment(new DetailTrajetFragment()); }
+                else if (id == R.id.chatId)
+                    replaceFragment(new DetailTrajetFragment());
+                else if (id == R.id.luggage)
+                    replaceFragment(new PostManagementFragment());
 
             return false;
         });

@@ -1,7 +1,9 @@
 package com.colis.colis_mobile;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import java.util.logging.Logger;
  * Use the {@link DetailTrajetFragment} factory method to
  * create an instance of this fragment.
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class DetailTrajetFragment extends Fragment {
 
     private static final Logger logger = Logger.getLogger(DetailTrajetFragment.class.getName());

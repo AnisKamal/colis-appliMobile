@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingRight="30dp"
-                android:paddingTop="20dpe">
+                android:paddingTop="20dp">
 
                 <EditText
                     android:id="@+id/depart"

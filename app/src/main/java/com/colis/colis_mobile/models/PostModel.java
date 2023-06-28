@@ -26,10 +26,12 @@ public class PostModel  implements Serializable {
 
     private String description;
 
+    private boolean activity;
+
     public PostModel() {
     }
 
-    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description) {
+    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description, boolean activity) {
         this.lieuDepart = lieuDepart;
         this.dateDepart = dateDepart;
         this.lieuDestination = lieuDestination;
@@ -39,6 +41,16 @@ public class PostModel  implements Serializable {
         this.poidInitial = poidInitial;
         this.poidRestant = poidRestant;
         this.description = description;
+        this.activity = activity;
+
+    }
+
+    public boolean isActivity() {
+        return activity;
+    }
+
+    public void setActivity(boolean activity) {
+        this.activity = activity;
     }
 
     public String getDescription() {
