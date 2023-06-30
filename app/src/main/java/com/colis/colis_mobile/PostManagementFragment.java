@@ -1,15 +1,19 @@
 package com.colis.colis_mobile;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.colis.colis_mobile.models.PostModel;
@@ -28,6 +32,9 @@ public class PostManagementFragment extends Fragment {
 
     ListView myList;
 
+    ImageButton addPostButton;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,7 +101,25 @@ public class PostManagementFragment extends Fragment {
             }
         });
 
+        addPostButton = view.findViewById(R.id.addPostId);
+
+        addPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new AddPostFragment());
+            }
+        });
+
 
         return view;
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

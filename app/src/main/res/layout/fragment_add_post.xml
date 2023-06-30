@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddPostFragment"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:background="@color/sky_blue_1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="-30dp"
+            android:background="@drawable/layout_bg_arrondi"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_edit_text_form"
+                android:hint="Saisir la ville de depart "
+                android:paddingLeft="30dp"
+                android:layout_marginTop="50dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_date_range_24"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/dateTimeDepartId"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textDateDepartId"
+                        android:layout_marginLeft="10dp"
+                        android:text="Selectionner date et heure de depart "
+                        android:textSize="15dp"
+                        android:layout_marginTop="18dp"
+                        android:textColor="@color/grey_msg"
+                        />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_edit_text_form"
+                    android:hint="Saisir la ville de destination "
+                    android:paddingLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    >
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_date_range_24"
+                        android:background="@android:color/transparent"
+                        android:id="@+id/dateTimeArriveeId"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textDateTimeArrivee"
+                        android:layout_marginLeft="10dp"
+                        android:text="Selectionner date et heure de destination "
+                        android:textSize="15dp"
+                        android:layout_marginTop="18dp"
+                        android:textColor="@color/grey_msg"
+                        />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="220dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_edit_text_form"
+                    android:hint="Saisir le nombre de Kg"
+                    android:paddingLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/nbrKilo"
+                    android:inputType="number"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:layout_width="220dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/rounded_edit_text_form"
+                        android:hint="Saisir le prix par Kg"
+                        android:paddingLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/prixEditId"
+                        android:inputType="number"/>
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/deviseSpinnerId"
+                        />
+
+                </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/rounded_edit_text_form"
+                    android:hint="Saisir des information supplementaire sur le voyage "
+                    android:paddingLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/descriptionFieldId"
+                    />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Publier"
+                    android:background="@drawable/rounded_button"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
