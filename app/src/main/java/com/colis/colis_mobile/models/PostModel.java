@@ -124,4 +124,20 @@ public class PostModel  implements Serializable {
     public void setPoidRestant(int poidRestant) {
         this.poidRestant = poidRestant;
     }
+
+    @Override
+    public String toString() {
+        return "PostModel{" +
+                "lieuDepart='" + lieuDepart + '\'' +
+                ", dateDepart=" + dateDepart +
+                ", lieuDestination='" + lieuDestination + '\'' +
+                ", dateDestination=" + dateDestination +
+                ", prix=" + prix +
+                ", devise='" + devise + '\'' +
+                ", poidInitial=" + poidInitial +
+                ", poidRestant=" + poidRestant +
+                ", description='" + description + '\'' +
+                ", activity=" + activity +
+                '}';
+    }
 }

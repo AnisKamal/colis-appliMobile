@@ -3,9 +3,13 @@ package com.colis.colis_mobile;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,38 +17,49 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.colis.colis_mobile.R;
+import com.colis.colis_mobile.models.PostModel;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link AddPostFragment} factory method to
  * create an instance of this fragment.
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class AddPostFragment extends Fragment {
 
     private DatePickerDialog.OnDateSetListener datePickerListenerDepart, datePickerListenerArrivee;
     private TimePickerDialog.OnTimeSetListener timePickerListenerDepart, timePickerListenerArrivee ;
     private Calendar calendar;
 
-    ImageButton selectDateTimeButtonDepart, selectDateTimeButtonDestination;
-    TextView selectedDateTimeTextViewDepart, selectedDateTimeTextViewDestination;
+    private ImageButton selectDateTimeButtonDepart, selectDateTimeButtonDestination;
+    private TextView selectedDateTimeTextViewDepart, selectedDateTimeTextViewDestination;
 
-    Spinner deviseSpinner ;
-    EditText numberEditText;
+    private Spinner deviseSpinner ;
+    private EditText prixEditText, nbreKiloEditText, villeDepartEditText, villeDestinationEditText, descriptionEditText;
+
+    private Button publierButton ;
+
+    private static final Logger logger = Logger.getLogger(DetailTrajetFragment.class.getName());
 
     public AddPostFragment() {
-
     }
 
     @Override
@@ -55,18 +70,21 @@ public class AddPostFragment extends Fragment {
         selectDateTimeButtonDestination = view.findViewById(R.id.dateTimeArriveeId);
          selectedDateTimeTextViewDepart = view.findViewById(R.id.textDateDepartId);
         selectedDateTimeTextViewDestination = view.findViewById(R.id.textDateTimeArrivee);
-
-         numberEditText = view.findViewById(R.id.prixEditId);
-
+        prixEditText = view.findViewById(R.id.prixFieldId);
         deviseSpinner = view.findViewById(R.id.deviseSpinnerId);
+
+        publierButton = view.findViewById(R.id.publierBtnId);
+
+        nbreKiloEditText = view.findViewById(R.id.nbrKiloFieldId);
+        villeDepartEditText = view.findViewById(R.id.villeDepartFieldId);
+        villeDestinationEditText = view.findViewById(R.id.villeDestinationFieldId);
+        descriptionEditText = view.findViewById(R.id.villeDestinationFieldId);
 
         ArrayAdapter<Devise> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, Devise.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deviseSpinner.setAdapter(adapter);
 
         calendar = Calendar.getInstance();
-
-
 
         datePickerListenerDepart = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -142,7 +160,7 @@ public class AddPostFragment extends Fragment {
             }
         });
 
-        numberEditText.addTextChangedListener(new TextWatcher() {
+        prixEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // Ne rien faire ici
@@ -163,9 +181,107 @@ public class AddPostFragment extends Fragment {
                         // La saisie est un nombre valide
                     } catch (NumberFormatException e) {
                         // La saisie n'est pas un nombre valide, réinitialiser le champ de texte
-                        numberEditText.setText("");
+                        prixEditText.setText("");
                     }
                 }
+            }
+        });
+
+        nbreKiloEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String input = s.toString();
+                if (!input.isEmpty()) {
+                    // Vérifier si la saisie est un nombre
+                    try {
+                        int number = Integer.parseInt(input);
+                        // La saisie est un nombre valide
+                    } catch (NumberFormatException e) {
+                        // La saisie n'est pas un nombre valide, réinitialiser le champ de texte
+                        prixEditText.setText("");
+                    }
+                }
+            }
+
+        });
+
+        publierButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String dateTimeRegex = "\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}";
+                boolean isValid = true;
+                String villeDepart = villeDepartEditText.getText().toString();
+                String villeDestination = villeDestinationEditText.getText().toString();
+                String nbreKilo = nbreKiloEditText.getText().toString();
+                String prix = prixEditText.getText().toString();
+                String dateDepart = selectedDateTimeTextViewDepart.getText().toString();
+                String dateDestination = selectedDateTimeTextViewDestination.getText().toString();
+                if(villeDepart.isEmpty()){
+                    villeDepartEditText.setError("veuillez saisir votre lieu de depart");
+                    Toast.makeText(getContext(), "Veuillez saisir votre ville de depart", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }if (villeDestination.isEmpty()) {
+                    villeDestinationEditText.setError("veuillez saisir votre lieu de destination");
+                    Toast.makeText(getContext(), "Veuillez saisir votre ville de destination ", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }  if (nbreKilo.isEmpty()) {
+                    nbreKiloEditText.setError("veuillez saisir le nombre de Kg total");
+                    Toast.makeText(getContext(), "Veuillez saisir le nombre de Kg Total", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }  if (prix.isEmpty()) {
+                    prixEditText.setError("veuillez saisir le prix par Kg");
+                    Toast.makeText(getContext(), "Veuillez saisir le nombre de Kg Total", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }  if (!dateDepart.matches(dateTimeRegex)) {
+                    Toast.makeText(getContext(), "Veuillez saisir la date et heure de depart", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }  if (!dateDestination.matches(dateTimeRegex)) {
+                    Toast.makeText(getContext(), "Veuillez saisir la date et heure de destination", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                }
+
+                if(isValid){
+                    logger.info("mon logging ");
+                    logger.info(deviseSpinner.toString());
+                    try {
+                        String format = "dd/MM/yyyy HH:mm";
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+                        LocalDateTime dateTimeDepart = LocalDateTime.parse(dateDepart, formatter);
+                        LocalDateTime dateTimeDestination = LocalDateTime.parse(dateDestination,formatter);
+                        double prixNumber= Double.parseDouble(prix);
+                        int nbreKiloInt = Integer.parseInt(nbreKilo);
+
+                        PostModel postModel = new PostModel(villeDepart,
+                                dateTimeDepart,
+                                villeDestination,
+                                dateTimeDestination,
+                                prixNumber,
+                                deviseSpinner.getSelectedItem().toString(),
+                                nbreKiloInt,
+                                nbreKiloInt,
+                                descriptionEditText.getText().toString(),
+                                true
+                                );
+                        logger.info("mon log "+ postModel.toString());
+                    } catch (DateTimeParseException e) {
+                        logger.info("error ! ");
+                    }
+
+
+
+                }
+
             }
         });
 
@@ -214,5 +330,14 @@ public class AddPostFragment extends Fragment {
                 true
         );
         timePickerDialog.show();
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

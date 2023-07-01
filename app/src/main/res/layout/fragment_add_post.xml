@@ -40,6 +40,7 @@
                 android:hint="Saisir la ville de depart "
                 android:paddingLeft="30dp"
                 android:layout_marginTop="50dp"
+                android:id="@+id/villeDepartFieldId"
                 />
 
             <LinearLayout
@@ -80,6 +81,7 @@
                     android:hint="Saisir la ville de destination "
                     android:paddingLeft="30dp"
                     android:layout_marginTop="10dp"
+                    android:id="@+id/villeDestinationFieldId"
                     />
 
                 <LinearLayout
@@ -116,7 +118,7 @@
                     android:hint="Saisir le nombre de Kg"
                     android:paddingLeft="30dp"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/nbrKilo"
+                    android:id="@+id/nbrKiloFieldId"
                     android:inputType="number"/>
 
                 <LinearLayout
@@ -132,7 +134,7 @@
                         android:hint="Saisir le prix par Kg"
                         android:paddingLeft="30dp"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/prixEditId"
+                        android:id="@+id/prixFieldId"
                         android:inputType="number"/>
 
                     <Spinner
@@ -162,6 +164,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
+                    android:id="@+id/publierBtnId"
                     />
 
             </LinearLayout>
