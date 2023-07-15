@@ -20,7 +20,7 @@ public class PostModel  implements Serializable {
 
     private String devise ;
 
-    private int poidInitial ;
+    private Integer poidInitial ;
 
     private int poidRestant ;
 
@@ -109,7 +109,7 @@ public class PostModel  implements Serializable {
         this.devise = devise;
     }
 
-    public int getPoidInitial() {
+    public Integer getPoidInitial() {
         return poidInitial;
     }
 

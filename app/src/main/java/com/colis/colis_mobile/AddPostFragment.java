@@ -27,6 +27,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.colis.colis_mobile.R;
+import com.colis.colis_mobile.models.Devise;
 import com.colis.colis_mobile.models.PostModel;
 
 import java.text.SimpleDateFormat;
@@ -66,6 +67,7 @@ public class AddPostFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =   inflater.inflate(R.layout.fragment_add_post, container, false);
+        Bundle bundle = getArguments();
         selectDateTimeButtonDepart = view.findViewById(R.id.dateTimeDepartId) ;
         selectDateTimeButtonDestination = view.findViewById(R.id.dateTimeArriveeId);
          selectedDateTimeTextViewDepart = view.findViewById(R.id.textDateDepartId);
@@ -78,13 +80,26 @@ public class AddPostFragment extends Fragment {
         nbreKiloEditText = view.findViewById(R.id.nbrKiloFieldId);
         villeDepartEditText = view.findViewById(R.id.villeDepartFieldId);
         villeDestinationEditText = view.findViewById(R.id.villeDestinationFieldId);
-        descriptionEditText = view.findViewById(R.id.villeDestinationFieldId);
+        descriptionEditText = view.findViewById(R.id.descriptionFieldId);
 
         ArrayAdapter<Devise> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, Devise.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deviseSpinner.setAdapter(adapter);
 
         calendar = Calendar.getInstance();
+
+        if(bundle != null){
+            PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
+            prixEditText.setText(selectedPost.getPrix().toString());
+            villeDepartEditText.setText(selectedPost.getLieuDepart());
+            villeDestinationEditText.setText(selectedPost.getLieuDestination());
+            selectedDateTimeTextViewDepart.setText(selectedPost.getDateDepart().toString());
+            selectedDateTimeTextViewDestination.setText(selectedPost.getDateDestination().toString());
+            nbreKiloEditText.setText(selectedPost.getPoidInitial().toString());
+            descriptionEditText.setText(selectedPost.getDescription());
+            publierButton.setText("Mettre a jour");
+            // publierButton.setBackgroundColor(8743);
+        }
 
         datePickerListenerDepart = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -284,6 +299,7 @@ public class AddPostFragment extends Fragment {
 
             }
         });
+
 
         return view ;
     }

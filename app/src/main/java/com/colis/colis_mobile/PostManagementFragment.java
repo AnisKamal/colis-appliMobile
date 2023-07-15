@@ -97,6 +97,20 @@ public class PostManagementFragment extends Fragment {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PostModel selectedPost = (PostModel) parent.getItemAtPosition(position);
+                if(!selectedPost.isActivity()){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selectedPost", selectedPost);
+                    InformationPostFragment informationPostFragment = new InformationPostFragment();
+                    informationPostFragment.setArguments(bundle);
+                    replaceFragment(informationPostFragment);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selectedPost2", selectedPost);
+                    AddPostFragment addPostFragment = new AddPostFragment();
+                    addPostFragment.setArguments(bundle);
+                    replaceFragment(addPostFragment);
+                }
 
             }
         });
@@ -116,7 +130,6 @@ public class PostManagementFragment extends Fragment {
 
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getFragmentManager();
-        //fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);

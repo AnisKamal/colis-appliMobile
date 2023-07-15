@@ -1,4 +1,4 @@
-package com.colis.colis_mobile;
+package com.colis.colis_mobile.models;
 
 public enum Devise {
     EUR("EUR"),
