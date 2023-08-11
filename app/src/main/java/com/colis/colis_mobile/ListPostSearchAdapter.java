@@ -78,8 +78,8 @@ public class ListPostSearchAdapter extends BaseAdapter {
             String myDate = LocalDate.now().toString();
 
         infoText.setText("Anis Kamal \n" +
-                postModel.getLieuDepart()+ "->" + postModel.getLieuDestination() + "\n"+
-                postModel.getDateDepart()
+                postModel.getRegionDepart()+ "->" + postModel.getRegionDestination() + "\n"+
+                postModel.getDateRegionDepart()
         );
         infoText.setTextSize(20);
         infoText.setPadding(10 , 0 , 0 , 0);

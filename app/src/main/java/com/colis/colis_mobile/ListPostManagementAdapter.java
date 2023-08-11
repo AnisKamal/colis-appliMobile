@@ -65,8 +65,8 @@ public class ListPostManagementAdapter extends BaseAdapter {
         infoLayout.setPadding(0, 20, 0, 0);
 
         TextView infoText = new TextView(context);
-        infoText.setText(postModel.getLieuDepart() + " -> " + postModel.getLieuDestination() + " \n" +
-                postModel.getDateDepart().format(formatter));
+        infoText.setText(postModel.getRegionDepart() + " -> " + postModel.getRegionDestination() + " \n" +
+                postModel.getDateRegionDepart().format(formatter));
         infoText.setTextSize(20);
         infoText.setPadding(10 , 0 , 0 , 0);
         infoText.setTextColor(Color.BLACK);

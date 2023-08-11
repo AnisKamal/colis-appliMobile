@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 
 public class PostModel  implements Serializable {
 
-    private  String lieuDepart ;
+    private  String regionDepart ;
 
-    private  LocalDateTime dateDepart ;
+    private  LocalDateTime dateRegionDepart ;
 
-    private String lieuDestination ;
+    private String regionDestination ;
 
-    private LocalDateTime dateDestination ;
+    private LocalDateTime dateRegionDestination ;
 
     private Double prix ;
 
@@ -31,18 +31,32 @@ public class PostModel  implements Serializable {
     public PostModel() {
     }
 
-    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description, boolean activity) {
-        this.lieuDepart = lieuDepart;
-        this.dateDepart = dateDepart;
-        this.lieuDestination = lieuDestination;
-        this.dateDestination = dateDestination;
+//    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description, boolean activity) {
+//        this.lieuDepart = lieuDepart;
+//        this.dateDepart = dateDepart;
+//        this.lieuDestination = lieuDestination;
+//        this.dateDestination = dateDestination;
+//        this.prix = prix;
+//        this.devise = devise;
+//        this.poidInitial = poidInitial;
+//        this.poidRestant = poidRestant;
+//        this.description = description;
+//        this.activity = activity;
+//
+//    }
+
+
+    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, Integer poidInitial, int poidRestant, String description, boolean activity) {
+        this.regionDepart = regionDepart;
+        this.dateRegionDepart = dateRegionDepart;
+        this.regionDestination = regionDestination;
+        this.dateRegionDestination = dateRegionDestination;
         this.prix = prix;
         this.devise = devise;
         this.poidInitial = poidInitial;
         this.poidRestant = poidRestant;
         this.description = description;
         this.activity = activity;
-
     }
 
     public boolean isActivity() {
@@ -61,36 +75,40 @@ public class PostModel  implements Serializable {
         this.description = description;
     }
 
-    public String getLieuDepart() {
-        return lieuDepart;
+    public String getRegionDepart() {
+        return regionDepart;
     }
 
-    public void setLieuDepart(String lieuDepart) {
-        this.lieuDepart = lieuDepart;
+    public LocalDateTime getDateRegionDepart() {
+        return dateRegionDepart;
     }
 
-    public LocalDateTime getDateDepart() {
-        return dateDepart;
+    public String getRegionDestination() {
+        return regionDestination;
     }
 
-    public void setDateDepart(LocalDateTime dateDepart) {
-        this.dateDepart = dateDepart;
+    public LocalDateTime getDateRegionDestination() {
+        return dateRegionDestination;
     }
 
-    public String getLieuDestination() {
-        return lieuDestination;
+    public void setRegionDepart(String regionDepart) {
+        this.regionDepart = regionDepart;
     }
 
-    public void setLieuDestination(String lieuDestination) {
-        this.lieuDestination = lieuDestination;
+    public void setDateRegionDepart(LocalDateTime dateRegionDepart) {
+        this.dateRegionDepart = dateRegionDepart;
     }
 
-    public LocalDateTime getDateDestination() {
-        return dateDestination;
+    public void setRegionDestination(String regionDestination) {
+        this.regionDestination = regionDestination;
     }
 
-    public void setDateDestination(LocalDateTime dateDestination) {
-        this.dateDestination = dateDestination;
+    public void setDateRegionDestination(LocalDateTime dateRegionDestination) {
+        this.dateRegionDestination = dateRegionDestination;
+    }
+
+    public void setPoidInitial(Integer poidInitial) {
+        this.poidInitial = poidInitial;
     }
 
     public Double getPrix() {
@@ -128,10 +146,10 @@ public class PostModel  implements Serializable {
     @Override
     public String toString() {
         return "PostModel{" +
-                "lieuDepart='" + lieuDepart + '\'' +
-                ", dateDepart=" + dateDepart +
-                ", lieuDestination='" + lieuDestination + '\'' +
-                ", dateDestination=" + dateDestination +
+                "regionDepart='" + regionDepart + '\'' +
+                ", dateRegionDepart=" + dateRegionDepart +
+                ", regionDestination='" + regionDestination + '\'' +
+                ", dateRegionDestination=" + dateRegionDestination +
                 ", prix=" + prix +
                 ", devise='" + devise + '\'' +
                 ", poidInitial=" + poidInitial +

@@ -39,9 +39,9 @@ public class DetailTrajetFragment extends Fragment {
              kiloDispo = view.findViewById(R.id.kiloDispoId);
             kiloDispo.setText(selectedPost.getPoidRestant() + " Kg");
             lieuDepart = view.findViewById(R.id.departId);
-            lieuDepart.setText(selectedPost.getLieuDepart());
+            lieuDepart.setText(selectedPost.getRegionDepart());
             lieuDestination = view.findViewById(R.id.arriveId);
-            lieuDestination.setText(selectedPost.getLieuDestination() );
+            lieuDestination.setText(selectedPost.getRegionDestination() );
              description = view.findViewById(R.id.descriptionId);
             description.setText(selectedPost.getDescription());
 
@@ -49,14 +49,14 @@ public class DetailTrajetFragment extends Fragment {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-            String selectedDateArrivee = selectedPost.getDateDestination().format(formatter);
+            String selectedDateArrivee = selectedPost.getDateRegionDestination().format(formatter);
 
             dateArrivee = view.findViewById(R.id.dateArrivee);
             dateArrivee.setText(selectedDateArrivee);
 
 
 
-            String selectedDateDepart = selectedPost.getDateDepart().format(formatter);
+            String selectedDateDepart = selectedPost.getDateRegionDepart().format(formatter);
 
             dateDepart = view.findViewById(R.id.dateDepart);
             dateDepart.setText(selectedDateDepart);

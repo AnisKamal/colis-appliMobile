@@ -27,8 +27,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.colis.colis_mobile.R;
+import com.colis.colis_mobile.api.PostApi;
+import com.colis.colis_mobile.api.RetrofitService;
 import com.colis.colis_mobile.models.Devise;
 import com.colis.colis_mobile.models.PostModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +43,11 @@ import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.logging.Logger;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,10 +102,10 @@ public class AddPostFragment extends Fragment {
         if(bundle != null){
             PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
             prixEditText.setText(selectedPost.getPrix().toString());
-            villeDepartEditText.setText(selectedPost.getLieuDepart());
-            villeDestinationEditText.setText(selectedPost.getLieuDestination());
-            selectedDateTimeTextViewDepart.setText(selectedPost.getDateDepart().toString());
-            selectedDateTimeTextViewDestination.setText(selectedPost.getDateDestination().toString());
+            villeDepartEditText.setText(selectedPost.getRegionDepart());
+            villeDestinationEditText.setText(selectedPost.getRegionDestination());
+            selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().toString());
+            selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().toString());
             nbreKiloEditText.setText(selectedPost.getPoidInitial().toString());
             descriptionEditText.setText(selectedPost.getDescription());
             publierButton.setText("Mettre a jour");
@@ -267,9 +278,10 @@ public class AddPostFragment extends Fragment {
                 }
 
                 if(isValid){
-                    logger.info("mon logging ");
-                    logger.info(deviseSpinner.toString());
+
                     try {
+                        RetrofitService retrofitService = new RetrofitService();
+                        PostApi postApi = retrofitService.getRetrofit().create(PostApi.class);
                         String format = "dd/MM/yyyy HH:mm";
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
                         LocalDateTime dateTimeDepart = LocalDateTime.parse(dateDepart, formatter);
@@ -277,7 +289,11 @@ public class AddPostFragment extends Fragment {
                         double prixNumber= Double.parseDouble(prix);
                         int nbreKiloInt = Integer.parseInt(nbreKilo);
 
-                        PostModel postModel = new PostModel(villeDepart,
+                        //   String formattedDateTime = dateTimeDepart.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+
+                        PostModel postModel = new PostModel(
+                                villeDepart,
                                 dateTimeDepart,
                                 villeDestination,
                                 dateTimeDestination,
@@ -289,10 +305,22 @@ public class AddPostFragment extends Fragment {
                                 true
                                 );
                         logger.info("mon log "+ postModel.toString());
+
+                        postApi.save(postModel).enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                Toast.makeText(getContext(), "save successful ! ", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getContext(), "save failed ! ", Toast.LENGTH_SHORT).show();
+                            }
+                        }) ;
+
                     } catch (DateTimeParseException e) {
                         logger.info("error ! ");
                     }
-
 
 
                 }
