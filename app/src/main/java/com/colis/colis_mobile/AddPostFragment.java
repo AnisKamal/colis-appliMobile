@@ -310,6 +310,7 @@ public class AddPostFragment extends Fragment {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 Toast.makeText(getContext(), "save successful ! ", Toast.LENGTH_SHORT).show();
+                                replaceFragment(new PostManagementFragment());
                             }
 
                             @Override

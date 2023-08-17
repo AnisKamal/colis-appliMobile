@@ -21,5 +21,5 @@ public interface PostApi {
     Call<ResponseBody> findByUser(@Path("id") String id);
 
     @GET("api/v1/posts")
-    Call<List<PostModel>> findAll();
+    Call<ResponseBody> findLastPosts();
 }

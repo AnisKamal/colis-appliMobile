@@ -81,7 +81,6 @@ public class PostManagementFragment extends Fragment {
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                Toast.makeText(getContext(), "OK ! ", Toast.LENGTH_SHORT ).show();
                                 try {
                                     String responseBody = response.body().string();
                                     Type postListType = new TypeToken<List<PostModel>>(){}.getType();
@@ -96,7 +95,7 @@ public class PostManagementFragment extends Fragment {
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Toast.makeText(getContext(), "KO ! ", Toast.LENGTH_SHORT ).show();
+                                Toast.makeText(getContext(), "probleme de reseaux  ", Toast.LENGTH_SHORT ).show();
                             }
                         });
 
