@@ -15,12 +15,33 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.colis.colis_mobile.api.PostApi;
+import com.colis.colis_mobile.api.RetrofitService;
 import com.colis.colis_mobile.models.PostModel;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +55,11 @@ public class PostManagementFragment extends Fragment {
 
     ImageButton addPostButton;
 
+     List<PostModel> postModelList = new ArrayList<>();
+
+    private static final Logger logger = Logger.getLogger(PostManagementFragment.class.getName());
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,57 +68,44 @@ public class PostManagementFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_post_management, container, false);
 
 
-        PostModel post1 = new PostModel(
-                "Paris",
-                LocalDateTime.now(),
-                "Dakar",
-                LocalDateTime.now(),
-                20d,
-                "EUR",
-                20,
-                20,
-                "Faite attention a vos colis",
-                true
-        );
+        RetrofitService retrofitService = new RetrofitService();
+        PostApi postApi = retrofitService.getRetrofit().create(PostApi.class);
 
-
-
-        PostModel post2 = new PostModel(
-                "Marseille",
-                LocalDateTime.now(),
-                "Abidjan",
-                LocalDateTime.now(),
-                20d,
-                "EUR",
-                20,
-                20,
-                "test description ",
-                true
-        );
-
-        PostModel post3 = new PostModel(
-                "Casablanca",
-                LocalDateTime.now(),
-                "Bamako",
-                LocalDateTime.now(),
-                40d,
-                "USD",
-                10,
-                5,
-                " ",
-                false
-        );
 
 
         myList = view.findViewById(R.id.MyPostsId);
 
-        List<PostModel > postModelList = new ArrayList<>();
-        postModelList.add(post1);
-        postModelList.add(post2);
-        postModelList.add(post3);
 
-        ListPostManagementAdapter adapter = new ListPostManagementAdapter(postModelList, getContext());
-        myList.setAdapter(adapter);
+
+        postApi.findByUser("fc6cc457-2548-4740-b704-b3113714b581")
+                        .enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                Toast.makeText(getContext(), "OK ! ", Toast.LENGTH_SHORT ).show();
+                                try {
+                                    String responseBody = response.body().string();
+                                    Type postListType = new TypeToken<List<PostModel>>(){}.getType();
+                                    postModelList = retrofitService.getGson().fromJson(responseBody, postListType);
+                                    ListPostManagementAdapter adapter = new ListPostManagementAdapter(postModelList, getContext());
+                                    myList.setAdapter(adapter);
+
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                Toast.makeText(getContext(), "KO ! ", Toast.LENGTH_SHORT ).show();
+                            }
+                        });
+
+
+        logger.info("valeur de la liste  : " + postModelList.toString());
+
+
+//        ListPostManagementAdapter adapter = new ListPostManagementAdapter(postModelList, getContext());
+//        myList.setAdapter(adapter);
 
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

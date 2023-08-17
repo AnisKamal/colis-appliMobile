@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-
-
 public class PostModel  implements Serializable {
 
     private  String regionDepart ;

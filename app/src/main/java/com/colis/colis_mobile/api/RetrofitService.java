@@ -7,9 +7,14 @@ import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -21,6 +26,8 @@ public class RetrofitService {
 
     private Retrofit retrofit;
 
+    private Gson gson;
+
     public RetrofitService() {
         initializeRetrofit();
     }
@@ -29,14 +36,18 @@ public class RetrofitService {
 
         DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context) -> new JsonPrimitive(src.format(isoFormatter)))
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class,  (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context) -> new JsonPrimitive(src.format(isoFormatter)) )
+                .registerTypeAdapter(LocalDateTime.class, (JsonDeserializer<LocalDateTime>) (json,typeOfT, context) -> {
+                    String dateString = json.getAsString();
+                    return LocalDateTime.parse(dateString, isoFormatter);
+                })
                 .setLenient()
                 .create();
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.11.104:8080")
+                .baseUrl("http://192.168.100.34:8080")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
     }
@@ -45,4 +56,7 @@ public class RetrofitService {
         return retrofit;
     }
 
+    public Gson getGson() {
+        return gson;
+    }
 }

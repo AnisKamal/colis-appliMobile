@@ -1,18 +1,15 @@
 package com.colis.colis_mobile;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
@@ -20,6 +17,8 @@ import com.colis.colis_mobile.models.PostModel;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ListPostManagementAdapter extends BaseAdapter {

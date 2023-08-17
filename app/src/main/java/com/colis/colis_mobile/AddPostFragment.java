@@ -106,7 +106,7 @@ public class AddPostFragment extends Fragment {
             villeDestinationEditText.setText(selectedPost.getRegionDestination());
             selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().toString());
             selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().toString());
-            nbreKiloEditText.setText(selectedPost.getPoidInitial().toString());
+            nbreKiloEditText.setText( String.valueOf(selectedPost.getPoidInitial()));
             descriptionEditText.setText(selectedPost.getDescription());
             publierButton.setText("Mettre a jour");
             // publierButton.setBackgroundColor(8743);
