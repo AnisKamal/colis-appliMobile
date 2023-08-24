@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.colis.colis_mobile.models.PostModel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -24,6 +25,9 @@ public class ListPostSearchAdapter extends BaseAdapter {
 
     private List<PostModel> listPost;
     private Context context;
+
+    String format = "dd/MM/yyyy HH:mm";
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
 
     public ListPostSearchAdapter(List<PostModel> listPost, Context context) {
         this.listPost = listPost;
@@ -79,7 +83,7 @@ public class ListPostSearchAdapter extends BaseAdapter {
 
         infoText.setText("Anis Kamal \n" +
                 postModel.getRegionDepart()+ "->" + postModel.getRegionDestination() + "\n"+
-                postModel.getDateRegionDepart()
+                postModel.getDateRegionDepart().format(formatter)
         );
         infoText.setTextSize(20);
         infoText.setPadding(10 , 0 , 0 , 0);

@@ -22,4 +22,7 @@ public interface PostApi {
 
     @GET("api/v1/posts")
     Call<ResponseBody> findLastPosts();
+
+    @GET("api/v1/posts/{regionDepart}/{regionDestination}")
+    Call<ResponseBody> findPostSearch(@Path("regionDepart") String regionDepart,@Path("regionDestination") String regionDestination);
 }

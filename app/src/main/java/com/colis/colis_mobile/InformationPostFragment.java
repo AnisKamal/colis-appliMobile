@@ -37,7 +37,7 @@ public class InformationPostFragment extends Fragment {
             prixText = view.findViewById(R.id.prixId0);
             prixText.setText(selectedPost.getPrix() + " " + selectedPost.getDevise() + "/ Kg");
             kiloInitial = view.findViewById(R.id.kiloDispoId0);
-            kiloInitial.setText(selectedPost.getPoidRestant() + " Kg");
+            kiloInitial.setText(selectedPost.getkiloRestant() + " Kg");
             lieuDepart = view.findViewById(R.id.departId0);
             lieuDepart.setText(selectedPost.getRegionDepart());
             lieuDestination = view.findViewById(R.id.arriveId0);

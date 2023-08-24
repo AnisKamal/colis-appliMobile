@@ -37,7 +37,7 @@ public class DetailTrajetFragment extends Fragment {
              prixText = view.findViewById(R.id.prixId);
             prixText.setText(selectedPost.getPrix() + " " + selectedPost.getDevise() + "/ Kg");
              kiloDispo = view.findViewById(R.id.kiloDispoId);
-            kiloDispo.setText(selectedPost.getPoidRestant() + " Kg");
+            kiloDispo.setText(selectedPost.getkiloRestant() + " Kg");
             lieuDepart = view.findViewById(R.id.departId);
             lieuDepart.setText(selectedPost.getRegionDepart());
             lieuDestination = view.findViewById(R.id.arriveId);

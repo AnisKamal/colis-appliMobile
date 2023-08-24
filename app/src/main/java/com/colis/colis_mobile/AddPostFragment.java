@@ -2,6 +2,7 @@ package com.colis.colis_mobile;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,11 +38,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -65,7 +73,9 @@ public class AddPostFragment extends Fragment {
     private TextView selectedDateTimeTextViewDepart, selectedDateTimeTextViewDestination;
 
     private Spinner deviseSpinner ;
-    private EditText prixEditText, nbreKiloEditText, villeDepartEditText, villeDestinationEditText, descriptionEditText;
+    private EditText prixEditText, nbreKiloEditText,  descriptionEditText;
+
+    private AutoCompleteTextView villeDepartEditText, villeDestinationEditText;
 
     private Button publierButton ;
 
@@ -99,6 +109,17 @@ public class AddPostFragment extends Fragment {
 
         calendar = Calendar.getInstance();
 
+        List<String> recommandations = readTextFile();
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
+                getContext(),
+                android.R.layout.simple_dropdown_item_1line,
+                recommandations
+        );
+        villeDepartEditText.setAdapter(adapter1);
+
+        villeDestinationEditText.setAdapter(adapter1);
+
         if(bundle != null){
             PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
             prixEditText.setText(selectedPost.getPrix().toString());
@@ -106,7 +127,7 @@ public class AddPostFragment extends Fragment {
             villeDestinationEditText.setText(selectedPost.getRegionDestination());
             selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().toString());
             selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().toString());
-            nbreKiloEditText.setText( String.valueOf(selectedPost.getPoidInitial()));
+            nbreKiloEditText.setText( String.valueOf(selectedPost.getkiloInitial()));
             descriptionEditText.setText(selectedPost.getDescription());
             publierButton.setText("Mettre a jour");
             // publierButton.setBackgroundColor(8743);
@@ -253,13 +274,13 @@ public class AddPostFragment extends Fragment {
                 String prix = prixEditText.getText().toString();
                 String dateDepart = selectedDateTimeTextViewDepart.getText().toString();
                 String dateDestination = selectedDateTimeTextViewDestination.getText().toString();
-                if(villeDepart.isEmpty()){
-                    villeDepartEditText.setError("veuillez saisir votre lieu de depart");
-                    Toast.makeText(getContext(), "Veuillez saisir votre ville de depart", Toast.LENGTH_SHORT).show();
+                if(villeDepart.isEmpty() || !recommandations.contains(villeDepart)){
+                    villeDepartEditText.setError("veuillez saisir un pays de depart correct");
+                    Toast.makeText(getContext(), "Veuillez saisir un pays  de depart", Toast.LENGTH_SHORT).show();
                     isValid = false;
-                }if (villeDestination.isEmpty()) {
-                    villeDestinationEditText.setError("veuillez saisir votre lieu de destination");
-                    Toast.makeText(getContext(), "Veuillez saisir votre ville de destination ", Toast.LENGTH_SHORT).show();
+                }if (villeDestination.isEmpty() || !recommandations.contains(villeDepart)) {
+                    villeDestinationEditText.setError("veuillez saisir un pays de destination");
+                    Toast.makeText(getContext(), "Veuillez saisir un pays de destination ", Toast.LENGTH_SHORT).show();
                     isValid = false;
                 }  if (nbreKilo.isEmpty()) {
                     nbreKiloEditText.setError("veuillez saisir le nombre de Kg total");
@@ -384,5 +405,30 @@ public class AddPostFragment extends Fragment {
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    private List<String> readTextFile() {
+        List<String> dataList = new ArrayList<>();
+
+        AssetManager assetManager = getContext().getAssets();
+        try {
+            InputStream is = getResources().openRawResource(R.raw.pays);
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader reader = new BufferedReader(isr);
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                dataList.add(line);
+            }
+
+            reader.close();
+            isr.close();
+            is.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return dataList;
     }
 }

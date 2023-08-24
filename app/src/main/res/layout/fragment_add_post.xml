@@ -32,12 +32,12 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             >
-            <EditText
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/rounded_edit_text_form"
-                android:hint="Saisir la ville de depart "
+                android:hint="Saisir le pays de depart "
                 android:paddingLeft="30dp"
                 android:layout_marginTop="50dp"
                 android:id="@+id/villeDepartFieldId"
@@ -74,11 +74,11 @@
 
                 </LinearLayout>
 
-                <EditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/rounded_edit_text_form"
-                    android:hint="Saisir la ville de destination "
+                    android:hint="Saisir le pays de destination "
                     android:paddingLeft="30dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/villeDestinationFieldId"

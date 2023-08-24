@@ -103,9 +103,6 @@ public class PostManagementFragment extends Fragment {
         logger.info("valeur de la liste  : " + postModelList.toString());
 
 
-//        ListPostManagementAdapter adapter = new ListPostManagementAdapter(postModelList, getContext());
-//        myList.setAdapter(adapter);
-
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

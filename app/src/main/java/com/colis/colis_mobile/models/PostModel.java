@@ -18,9 +18,9 @@ public class PostModel  implements Serializable {
 
     private String devise ;
 
-    private Integer poidInitial ;
+    private Integer kiloInitial ;
 
-    private int poidRestant ;
+    private int kiloRestant ;
 
     private String description;
 
@@ -29,30 +29,30 @@ public class PostModel  implements Serializable {
     public PostModel() {
     }
 
-//    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int poidInitial, int poidRestant, String description, boolean activity) {
+//    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int kiloInitial, int kiloRestant, String description, boolean activity) {
 //        this.lieuDepart = lieuDepart;
 //        this.dateDepart = dateDepart;
 //        this.lieuDestination = lieuDestination;
 //        this.dateDestination = dateDestination;
 //        this.prix = prix;
 //        this.devise = devise;
-//        this.poidInitial = poidInitial;
-//        this.poidRestant = poidRestant;
+//        this.kiloInitial = kiloInitial;
+//        this.kiloRestant = kiloRestant;
 //        this.description = description;
 //        this.activity = activity;
 //
 //    }
 
 
-    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, Integer poidInitial, int poidRestant, String description, boolean activity) {
+    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, Integer kiloInitial, int kiloRestant, String description, boolean activity) {
         this.regionDepart = regionDepart;
         this.dateRegionDepart = dateRegionDepart;
         this.regionDestination = regionDestination;
         this.dateRegionDestination = dateRegionDestination;
         this.prix = prix;
         this.devise = devise;
-        this.poidInitial = poidInitial;
-        this.poidRestant = poidRestant;
+        this.kiloInitial = kiloInitial;
+        this.kiloRestant = kiloRestant;
         this.description = description;
         this.activity = activity;
     }
@@ -105,8 +105,8 @@ public class PostModel  implements Serializable {
         this.dateRegionDestination = dateRegionDestination;
     }
 
-    public void setPoidInitial(Integer poidInitial) {
-        this.poidInitial = poidInitial;
+    public void setkiloInitial(Integer kiloInitial) {
+        this.kiloInitial = kiloInitial;
     }
 
     public Double getPrix() {
@@ -125,20 +125,20 @@ public class PostModel  implements Serializable {
         this.devise = devise;
     }
 
-    public Integer getPoidInitial() {
-        return poidInitial;
+    public Integer getkiloInitial() {
+        return kiloInitial;
     }
 
-    public void setPoidInitial(int poidInitial) {
-        this.poidInitial = poidInitial;
+    public void setkiloInitial(int kiloInitial) {
+        this.kiloInitial = kiloInitial;
     }
 
-    public int getPoidRestant() {
-        return poidRestant;
+    public int getkiloRestant() {
+        return kiloRestant;
     }
 
-    public void setPoidRestant(int poidRestant) {
-        this.poidRestant = poidRestant;
+    public void setkiloRestant(int kiloRestant) {
+        this.kiloRestant = kiloRestant;
     }
 
     @Override
@@ -150,8 +150,8 @@ public class PostModel  implements Serializable {
                 ", dateRegionDestination=" + dateRegionDestination +
                 ", prix=" + prix +
                 ", devise='" + devise + '\'' +
-                ", poidInitial=" + poidInitial +
-                ", poidRestant=" + poidRestant +
+                ", kiloInitial=" + kiloInitial +
+                ", kiloRestant=" + kiloRestant +
                 ", description='" + description + '\'' +
                 ", activity=" + activity +
                 '}';
