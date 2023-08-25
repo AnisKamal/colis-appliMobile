@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                  int id = item.getItemId();
                 if(id == R.id.homeId) replaceFragment(new HomeFragment());
                 else if (id == R.id.chatId)
-                    replaceFragment(new DetailTrajetFragment());
+                    replaceFragment(new ChatFragment());
                 else if (id == R.id.luggage)
                     replaceFragment(new PostManagementFragment());
 

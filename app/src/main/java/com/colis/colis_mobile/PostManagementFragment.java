@@ -50,7 +50,6 @@ import retrofit2.Response;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class PostManagementFragment extends Fragment {
-
     ListView myList;
 
     ImageButton addPostButton;
