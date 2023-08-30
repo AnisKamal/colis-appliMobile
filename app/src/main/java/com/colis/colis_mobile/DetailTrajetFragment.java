@@ -1,14 +1,18 @@
 package com.colis.colis_mobile;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.colis.colis_mobile.models.PostModel;
@@ -26,7 +30,9 @@ public class DetailTrajetFragment extends Fragment {
 
     private static final Logger logger = Logger.getLogger(DetailTrajetFragment.class.getName());
 
-    TextView prixText, kiloDispo,lieuDepart, lieuDestination, description, dateDepart, dateArrivee ;
+    TextView prixText, kiloDispo,lieuDepart, lieuDestination, description, dateDepart, dateArrivee, nomProfile ;
+    Button contactButton ;
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +50,10 @@ public class DetailTrajetFragment extends Fragment {
             lieuDestination.setText(selectedPost.getRegionDestination() );
              description = view.findViewById(R.id.descriptionId);
             description.setText(selectedPost.getDescription());
+
+             contactButton = view.findViewById(R.id.contactID);
+
+            nomProfile = view.findViewById(R.id.myProfile);
 
             // paramettre des dates :
 
@@ -63,7 +73,26 @@ public class DetailTrajetFragment extends Fragment {
 
             description = view.findViewById(R.id.descriptionId);
             description.setText(selectedPost.getDescription());
+
+            nomProfile.setText(selectedPost.getProfile().getFullName());
+
+            contactButton.setOnClickListener(contact -> {
+                ContactFragment contactFragment = new ContactFragment();
+//                Bundle myBundle = new Bundle();
+//                bundle.putSerializable("selectedPostProfile", selectedPost);
+                contactFragment.setArguments(bundle);
+                replaceFragment(contactFragment);
+            });
         }
         return view ;
+    }
+
+    private void replaceFragment(Fragment fragment){
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

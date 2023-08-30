@@ -124,7 +124,9 @@ public class HomeFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("selectedPost", selectedPost);
                 DetailTrajetFragment detailTrajetFragment = new DetailTrajetFragment();
+//                ContactFragment contactFragment = new ContactFragment();
                 detailTrajetFragment.setArguments(bundle);
+//                contactFragment.setArguments(bundle);
                 replaceFragment(detailTrajetFragment);
             }
         });

@@ -8,9 +8,12 @@ public class ProfileModel implements Serializable {
 
     private String photoProfile ;
 
-    public ProfileModel(String fullName, String photoProfile) {
+    private String NTelephone ;
+
+    public ProfileModel(String fullName, String photoProfile, String NTelephone) {
         this.fullName = fullName;
         this.photoProfile = photoProfile;
+        this.NTelephone = NTelephone;
     }
 
     public String getFullName() {
@@ -27,5 +30,13 @@ public class ProfileModel implements Serializable {
 
     public void setPhotoProfile(String photoProfile) {
         this.photoProfile = photoProfile;
+    }
+
+    public String getNTelephone() {
+        return NTelephone;
+    }
+
+    public void setNTelephone(String NTelephone) {
+        this.NTelephone = NTelephone;
     }
 }

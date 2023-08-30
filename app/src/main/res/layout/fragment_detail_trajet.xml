@@ -36,7 +36,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/rounded_button"
                 android:text="Contacter"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:id="@+id/contactID"/>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -64,7 +65,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Anis Kamal"
+                    android:id="@+id/myProfile"
                     android:textSize="30dp"
                     android:layout_marginLeft="25dp"
                     />

@@ -32,18 +32,18 @@ public class ChatFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        myList = view.findViewById(R.id.listContact);
-
-        ProfileModel p1 = new ProfileModel("Anis Kamal", "");
-        ProfileModel p2 = new ProfileModel("Said Hossain", "");
-        ProfileModel p3 = new ProfileModel("hassan Tarek", "");
-        profileModelList.add(p1);
-        profileModelList.add(p2);
-        profileModelList.add(p3);
-
-        ListContactAdapter adapter = new ListContactAdapter(profileModelList, getContext());
-
-        myList.setAdapter(adapter);
+//        myList = view.findViewById(R.id.listContact);
+//
+//        ProfileModel p1 = new ProfileModel("Anis Kamal", "");
+//        ProfileModel p2 = new ProfileModel("Said Hossain", "");
+//        ProfileModel p3 = new ProfileModel("hassan Tarek", "");
+//        profileModelList.add(p1);
+//        profileModelList.add(p2);
+//        profileModelList.add(p3);
+//
+//        ListContactAdapter adapter = new ListContactAdapter(profileModelList, getContext());
+//
+//        myList.setAdapter(adapter);
 
         return view;
     }

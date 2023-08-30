@@ -81,7 +81,7 @@ public class ListPostSearchAdapter extends BaseAdapter {
 
             String myDate = LocalDate.now().toString();
 
-        infoText.setText("Anis Kamal \n" +
+        infoText.setText( postModel.getProfile().getFullName()+ " \n" +
                 postModel.getRegionDepart()+ "->" + postModel.getRegionDestination() + "\n"+
                 postModel.getDateRegionDepart().format(formatter)
         );

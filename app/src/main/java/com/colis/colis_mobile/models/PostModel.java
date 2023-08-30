@@ -26,23 +26,10 @@ public class PostModel  implements Serializable {
 
     private boolean activity;
 
+    private ProfileModel profile;
+
     public PostModel() {
     }
-
-//    public PostModel(String lieuDepart, LocalDateTime dateDepart, String lieuDestination, LocalDateTime dateDestination, Double prix, String devise, int kiloInitial, int kiloRestant, String description, boolean activity) {
-//        this.lieuDepart = lieuDepart;
-//        this.dateDepart = dateDepart;
-//        this.lieuDestination = lieuDestination;
-//        this.dateDestination = dateDestination;
-//        this.prix = prix;
-//        this.devise = devise;
-//        this.kiloInitial = kiloInitial;
-//        this.kiloRestant = kiloRestant;
-//        this.description = description;
-//        this.activity = activity;
-//
-//    }
-
 
     public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, Integer kiloInitial, int kiloRestant, String description, boolean activity) {
         this.regionDepart = regionDepart;
@@ -139,6 +126,14 @@ public class PostModel  implements Serializable {
 
     public void setkiloRestant(int kiloRestant) {
         this.kiloRestant = kiloRestant;
+    }
+
+    public ProfileModel getProfile() {
+        return profile;
+    }
+
+    public void setProfile(ProfileModel profile) {
+        this.profile = profile;
     }
 
     @Override

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:background="@color/sky_blue_1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="-30dp"
+        android:background="@drawable/layout_bg_arrondi"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="75dp">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/profileContact"
+                android:layout_marginLeft="50dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="30dp"
+                android:id="@+id/nomProfile"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="175dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rectangle_edit_text"
+                    android:editable="false"
+                    android:textSize="20dp"
+                    android:id="@+id/NPhone"
+                    />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/baseline_copy_all_24"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/copieNPhone"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
