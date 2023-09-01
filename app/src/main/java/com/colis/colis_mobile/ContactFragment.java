@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.colis.colis_mobile.models.PostModel;
 import com.colis.colis_mobile.models.ProfileModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.logging.Logger;
 
@@ -54,11 +57,24 @@ public class ContactFragment extends Fragment {
         numeroText = view.findViewById(R.id.NPhone);
         fullName = view.findViewById(R.id.nomProfile);
 
-        profileImage.setImageResource(R.drawable.utilisateur);
-
             PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost");
 
-            logger.info( "Mon post : "+ selectedPost.toString());
+            if(selectedPost.getProfile().getPhotoProfile() != null ){
+                Picasso.get().load(selectedPost.getProfile().getPhotoProfile()).transform(new CircleTransformation())
+                        .into(profileImage, new Callback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onError(Exception e) {
+                                Log.e("Picasso", "Error loading image", e);
+                            }
+                        });
+            }else{
+                profileImage.setImageResource(R.drawable.utilisateur);
+            }
 
             fullName.setText(selectedPost.getProfile().getFullName());
 

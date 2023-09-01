@@ -3,6 +3,7 @@ package com.colis.colis_mobile;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
 import com.colis.colis_mobile.models.PostModel;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -69,7 +75,28 @@ public class ListPostSearchAdapter extends BaseAdapter {
         // profile  Image info
 
         ImageView profilImage = new ImageView(context);
-        profilImage.setImageResource(R.drawable.utilisateur);
+
+        if(postModel.getProfile().getPhotoProfile() != null){
+            Picasso.get().load(postModel.getProfile().getPhotoProfile()).transform(new CircleTransformation())
+                    .into(profilImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Log.e("Picasso", "Error loading image", e);
+                        }
+                    });
+        }else{
+            profilImage.setImageResource(R.drawable.utilisateur);
+        }
+
+
+
+        //
+       // profilImage.setImageURI(postModel.getProfile().getPhotoProfile());
         profilImage.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
         profilImage.setPadding(10, 0, 0 , 0);
 
