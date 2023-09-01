@@ -43,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:textSize="30dp"
-                android:id="@+id/nomProfile"/>
+                android:id="@+id/nomProfile"
+                android:textIsSelectable="true" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,6 +58,7 @@
                     android:editable="false"
                     android:textSize="20dp"
                     android:id="@+id/NPhone"
+                    android:textIsSelectable="true"
                     />
 
                 <ImageButton

@@ -7,9 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.colis.colis_mobile.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -32,11 +36,21 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
 
                  int id = item.getItemId();
-                if(id == R.id.homeId) replaceFragment(new HomeFragment());
-                else if (id == R.id.chatId)
+                if(id == R.id.homeId){
+                    replaceFragment(new HomeFragment());
+                    item.setChecked(true);
+                }
+                else if (id == R.id.chatId){
                     replaceFragment(new ChatFragment());
-                else if (id == R.id.luggage)
+                    item.setChecked(true);
+                }
+                else if (id == R.id.luggage){
                     replaceFragment(new PostManagementFragment());
+                    item.setChecked(true);
+                }else if (id == R.id.setting){
+                    //replaceFragment();
+                    item.setChecked(true);
+                }
 
             return false;
         });
