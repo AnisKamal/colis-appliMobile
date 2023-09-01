@@ -66,13 +66,14 @@
 
             <Button
                 android:layout_width="175dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginLeft="160dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_button"
                 android:text="Rechercher"
                 android:textColor="@color/white"
-                android:id="@+id/search_button" />
+                android:id="@+id/search_button"
+                android:backgroundTint="@color/sky_blue_1"/>
+
 
             <LinearLayout
                 android:id="@+id/listPostLayout"

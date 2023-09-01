@@ -158,9 +158,9 @@
 
                 <Button
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:text="Publier"
-                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@color/sky_blue_1"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
