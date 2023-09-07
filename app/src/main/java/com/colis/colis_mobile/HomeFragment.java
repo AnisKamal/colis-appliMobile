@@ -162,8 +162,6 @@ public class HomeFragment extends Fragment {
                     });
                 }
 
-
-               // postApi.findPostSearch()
             }
         });
 
