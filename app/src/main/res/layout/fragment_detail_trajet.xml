@@ -203,6 +203,7 @@
                     android:textColor="@color/green_1"
                     android:id="@+id/descriptionId"
                     android:layout_marginLeft="30dp"
+                    android:textIsSelectable="true"
                     />
 
             </LinearLayout>

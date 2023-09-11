@@ -3,77 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".HomeFragment">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/sky_blue_1"
-            android:orientation="vertical"
-            android:paddingLeft="30dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="30dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingRight="30dp"
-                android:paddingTop="20dp">
-
-                <AutoCompleteTextView
-                    android:id="@+id/depart"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="Saisir le pays  de départ"
-                    android:paddingLeft="30dp"
-                    />
-
-                <AutoCompleteTextView
-                    android:id="@+id/arrive"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="Saisir le pays de destination "
-                    android:paddingLeft="30dp"
-                    />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-30dp"
-            android:background="@drawable/layout_bg_arrondi"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
-                android:layout_width="175dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="160dp"
-                android:layout_marginTop="10dp"
-                android:text="Rechercher"
-                android:textColor="@color/white"
-                android:id="@+id/search_button"
-                android:backgroundTint="@color/sky_blue_1"/>
-
+            <!-- Incluez ici votre en-tête de recherche -->
+            <include layout="@layout/fragment_search_header" />
 
             <LinearLayout
                 android:id="@+id/listPostLayout"
@@ -82,21 +25,19 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <ListView
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/listPost"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    />
+                    android:layout_height="match_parent">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listPost"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                </androidx.core.widget.NestedScrollView>
             </LinearLayout>
 
-
         </LinearLayout>
-
-
-    </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
