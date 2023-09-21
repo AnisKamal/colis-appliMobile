@@ -9,6 +9,11 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="accueil">
+Notre application vous permet d \' envoyer  d envoyer votre colis via des particuliers (GP).
+Si vous êtes un transporteur (GP) vous pouvez faire un post dans l \' application et etre contacté par des clients.
+    </string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
