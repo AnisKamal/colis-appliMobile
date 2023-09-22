@@ -93,7 +93,9 @@
         android:layout_height="50dp"
         android:hint=" Saisir votre addresse email "
         android:paddingLeft="30dp"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:id="@+id/emailFieldId"
+        />
 
         <EditText
             android:layout_width="match_parent"
@@ -102,6 +104,7 @@
             android:paddingLeft="30dp"
             android:layout_marginTop="20dp"
             android:inputType="textPassword"
+            android:id="@+id/passwordFieldId"
             />
         <Button
             android:layout_width="match_parent"
@@ -110,6 +113,7 @@
             android:layout_marginTop="30dp"
             android:text="Se connecter "
             android:textSize="25dp"
+            android:id="@+id/connectionButtonId"
             />
 
     </LinearLayout>
