@@ -1,5 +1,6 @@
 package com.colis.colis_mobile.api;
 
+import android.content.Context;
 import android.os.Build;
 import android.util.JsonReader;
 
@@ -18,21 +19,30 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class RetrofitService {
 
+    private final String URL = "http://192.168.100.144:8080" ;
+
     private Retrofit retrofit;
 
     private Gson gson;
 
-    public RetrofitService() {
-        initializeRetrofit();
+    private Context context;
+
+    public RetrofitService(Context context) {
+        initializeRetrofit(context);
     }
 
-    private void initializeRetrofit() {
+    private void initializeRetrofit(Context MyContext) {
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new AuthInterceptor(MyContext))
+                .build();
 
         DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -47,8 +57,9 @@ public class RetrofitService {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.11.102:8080")
+                .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
                 .build();
     }
 

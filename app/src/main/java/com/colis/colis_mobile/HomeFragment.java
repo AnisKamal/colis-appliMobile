@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
-        RetrofitService retrofitService = new RetrofitService();
+        RetrofitService retrofitService = new RetrofitService(getContext());
         PostApi postApi = retrofitService.getRetrofit().create(PostApi.class);
 
         myList = view.findViewById(R.id.listPost);
@@ -104,6 +104,9 @@ public class HomeFragment extends Fragment {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        int status = response.code();
+                        logger.info("code status : " + status);
+
                         try {
                             String responseBody = response.body().string();
                             Type postListType = new TypeToken<List<PostModel>>() {

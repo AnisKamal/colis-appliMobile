@@ -67,7 +67,7 @@ public class PostManagementFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_post_management, container, false);
 
 
-        RetrofitService retrofitService = new RetrofitService();
+        RetrofitService retrofitService = new RetrofitService(getContext());
         PostApi postApi = retrofitService.getRetrofit().create(PostApi.class);
 
 

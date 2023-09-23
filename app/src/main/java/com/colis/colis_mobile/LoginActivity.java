@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -51,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.connectionButtonId);
 
 
-        RetrofitService retrofitService = new RetrofitService();
+        RetrofitService retrofitService = new RetrofitService(getApplicationContext());
         AuthenticationApi authenticationApi = retrofitService.getRetrofit().create(AuthenticationApi.class);
 
 
@@ -75,6 +77,16 @@ public class LoginActivity extends AppCompatActivity {
                                     AuthenticationResponseModel tokenResponse = retrofitService.getGson().fromJson(responseBody,AuthenticationType );
                                     logger.info("ma response : " );
                                     logger.info(tokenResponse.toString());
+
+                                    SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                    editor.putString("tokenAccess" ,tokenResponse.getAccessToken() );
+                                    editor.apply();
+
+                                    Intent welcomeIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(welcomeIntent);
+
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }

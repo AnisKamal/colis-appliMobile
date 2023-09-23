@@ -2,6 +2,7 @@ package com.colis.colis_mobile;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -301,7 +302,7 @@ public class AddPostFragment extends Fragment {
                 if(isValid){
 
                     try {
-                        RetrofitService retrofitService = new RetrofitService();
+                        RetrofitService retrofitService = new RetrofitService(getContext());
                         PostApi postApi = retrofitService.getRetrofit().create(PostApi.class);
                         String format = "dd/MM/yyyy HH:mm";
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
