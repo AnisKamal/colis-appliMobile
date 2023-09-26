@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.colis.colis_mobile.api.AuthInterceptor;
 import com.colis.colis_mobile.api.AuthenticationApi;
 import com.colis.colis_mobile.api.RetrofitService;
+import com.colis.colis_mobile.api.RetrofitServiceWithoutInterceptor;
 import com.colis.colis_mobile.models.AuthenticationRequestModel;
 import com.colis.colis_mobile.models.AuthenticationResponseModel;
 import com.colis.colis_mobile.models.PostModel;
@@ -27,11 +29,14 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.connectionButtonId);
 
 
-        RetrofitService retrofitService = new RetrofitService(getApplicationContext());
+        RetrofitServiceWithoutInterceptor retrofitService = new RetrofitServiceWithoutInterceptor();
         AuthenticationApi authenticationApi = retrofitService.getRetrofit().create(AuthenticationApi.class);
 
 
@@ -65,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString();
 
                 AuthenticationRequestModel request = new AuthenticationRequestModel(email, password);
+                logger.info("ma requete : ");
+                logger.info(request.toString());
 
                 authenticationApi.authenticate(request)
                         .enqueue(new Callback<ResponseBody>() {
@@ -81,7 +88,10 @@ public class LoginActivity extends AppCompatActivity {
                                     SharedPreferences sharedPreferences = getSharedPreferences("auth", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                                    editor.putString("tokenAccess" ,tokenResponse.getAccessToken() );
+                                    logger.info("Mon token d access : ");
+                                    logger.info(tokenResponse.getAccessToken());
+
+                                    editor.putString("tokenAccess" ,tokenResponse.getAccessToken());
                                     editor.apply();
 
                                     Intent welcomeIntent = new Intent(LoginActivity.this, MainActivity.class);

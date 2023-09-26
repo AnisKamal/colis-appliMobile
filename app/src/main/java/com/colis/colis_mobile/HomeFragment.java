@@ -55,7 +55,6 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class HomeFragment extends Fragment {
 
-    private LinearLayout listLayout;
     private RecyclerView myList;
 
     private Button searchButton;
