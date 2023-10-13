@@ -113,7 +113,6 @@ public class HomeFragment extends Fragment {
                             ListPostSearchAdapter adapter = new ListPostSearchAdapter(postModelList, getContext());
                            // adapter.setOnItemClickListener();
                             myList.setAdapter(adapter);
-
                             adapter.setItemClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
