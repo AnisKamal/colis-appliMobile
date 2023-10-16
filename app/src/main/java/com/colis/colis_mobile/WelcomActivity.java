@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -145,6 +146,13 @@ public class WelcomActivity extends AppCompatActivity {
                             Type userType = new TypeToken<UserModel>(){}.getType();
 
                             UserModel myuser = retrofitService.getGson().fromJson(responseBody, userType);
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("User", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("email", myuser.getEmail());
+                            editor.putString("name", myuser.getName());
+                            editor.putString("photo", myuser.getUrlPhoto());
+                            editor.apply();
 
                             navigateToMain();
 
