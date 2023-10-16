@@ -9,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 
+import android.content.Context;
 import android.content.Intent;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,6 +24,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.colis.colis_mobile.api.AuthenticationApi;
+import com.colis.colis_mobile.api.PostApi;
+import com.colis.colis_mobile.api.RetrofitService;
+import com.colis.colis_mobile.models.PostModel;
+import com.colis.colis_mobile.models.UserModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -28,12 +37,21 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 
 import com.google.android.gms.tasks.Task;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WelcomActivity extends AppCompatActivity {
-
 
     TextView identifierText ;
     Button googleButton , logout;
@@ -105,7 +123,45 @@ public class WelcomActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try{
             GoogleSignInAccount account = task.getResult(ApiException.class);
-            navigateToMain();
+            RetrofitService retrofitService = new RetrofitService();
+            AuthenticationApi authenticationApi = retrofitService.getRetrofit().create(AuthenticationApi.class);
+            UserModel user = new UserModel();
+            if( isInternetConnected(getApplicationContext()) && account != null) {
+                user.setEmail(account.getEmail());
+                user.setName(account.getDisplayName());
+               // user.setUrlPhoto(account.getPhotoUrl());
+
+                Uri photoUri = account.getPhotoUrl();
+                String image =  (photoUri != null) ? photoUri.toString() : null;
+                user.setUrlPhoto(image);
+
+                logger.info("info sur l utilisateur : " + user.toString());
+
+                authenticationApi.authenticate(user).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String responseBody = response.body().string();
+                            Type userType = new TypeToken<UserModel>(){}.getType();
+
+                            UserModel myuser = retrofitService.getGson().fromJson(responseBody, userType);
+
+                            navigateToMain();
+
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+
+            }
+
         }catch (ApiException e){
 
         }
@@ -117,4 +173,14 @@ public class WelcomActivity extends AppCompatActivity {
         Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
         startActivity(intent);
     }
+
+    public boolean isInternetConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
 }
