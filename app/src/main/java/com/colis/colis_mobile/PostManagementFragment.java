@@ -1,6 +1,8 @@
 package com.colis.colis_mobile;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -74,9 +76,12 @@ public class PostManagementFragment extends Fragment {
 
         myList = view.findViewById(R.id.MyPostsId);
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString("id","");
 
+        logger.info("valeure de id " + id);
 
-        postApi.findByUser("fc6cc457-2548-4740-b704-b3113714b581")
+        postApi.findByUser(id)
                         .enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -22,7 +22,6 @@ import okhttp3.ResponseBody;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ListPostManagementAdapter extends BaseAdapter {
-
     List<PostModel> postModelList;
     Context context;
 

@@ -333,7 +333,6 @@ public class AddPostFragment extends Fragment {
                         SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
                         String id = sharedPreferences.getString("id", "");
 
-                        logger.info("mon id est : " + id);
                         postModel.setUser(new UserModel(id));
 
                         logger.info("mon log "+ postModel.toString());
