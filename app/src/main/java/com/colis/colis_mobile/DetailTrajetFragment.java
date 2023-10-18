@@ -83,10 +83,10 @@ public class DetailTrajetFragment extends Fragment {
             description = view.findViewById(R.id.descriptionId);
             description.setText(selectedPost.getDescription());
 
-            nomProfile.setText(selectedPost.getProfile().getFullName());
+            nomProfile.setText(selectedPost.getUser().getName());
 
-            if(selectedPost.getProfile().getPhotoProfile() != null ){
-                Picasso.get().load(selectedPost.getProfile().getPhotoProfile()).transform(new CircleTransformation())
+            if(selectedPost.getUser().getUrlPhoto() != null ){
+                Picasso.get().load(selectedPost.getUser().getUrlPhoto()).transform(new CircleTransformation())
                         .into(profileImage, new Callback() {
                             @Override
                             public void onSuccess() {

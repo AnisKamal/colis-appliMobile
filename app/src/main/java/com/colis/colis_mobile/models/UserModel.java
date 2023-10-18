@@ -1,6 +1,8 @@
 package com.colis.colis_mobile.models;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     private String email;
 
     private String name;

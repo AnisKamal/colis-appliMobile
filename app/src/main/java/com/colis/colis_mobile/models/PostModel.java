@@ -26,7 +26,8 @@ public class PostModel  implements Serializable {
 
     private boolean activity;
 
-    private ProfileModel profile;
+
+    private UserModel user;
 
     public PostModel() {
     }
@@ -128,12 +129,29 @@ public class PostModel  implements Serializable {
         this.kiloRestant = kiloRestant;
     }
 
-    public ProfileModel getProfile() {
-        return profile;
+
+    public Integer getKiloInitial() {
+        return kiloInitial;
     }
 
-    public void setProfile(ProfileModel profile) {
-        this.profile = profile;
+    public void setKiloInitial(Integer kiloInitial) {
+        this.kiloInitial = kiloInitial;
+    }
+
+    public int getKiloRestant() {
+        return kiloRestant;
+    }
+
+    public void setKiloRestant(int kiloRestant) {
+        this.kiloRestant = kiloRestant;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 
     @Override

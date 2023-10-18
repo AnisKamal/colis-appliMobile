@@ -59,8 +59,8 @@ public class ContactFragment extends Fragment {
 
             PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost");
 
-            if(selectedPost.getProfile().getPhotoProfile() != null ){
-                Picasso.get().load(selectedPost.getProfile().getPhotoProfile()).transform(new CircleTransformation())
+            if(selectedPost.getUser().getUrlPhoto() != null ){
+                Picasso.get().load(selectedPost.getUser().getUrlPhoto()).transform(new CircleTransformation())
                         .into(profileImage, new Callback() {
                             @Override
                             public void onSuccess() {
@@ -76,9 +76,9 @@ public class ContactFragment extends Fragment {
                 profileImage.setImageResource(R.drawable.utilisateur);
             }
 
-            fullName.setText(selectedPost.getProfile().getFullName());
+            fullName.setText(selectedPost.getUser().getName());
 
-            numeroText.setText(selectedPost.getProfile().getNTelephone());
+            //numeroText.setText(selectedPost.getProfile().getNTelephone());
 
         copieButton.setOnClickListener(copie -> {
             String textCopie = numeroText.getText().toString() ;

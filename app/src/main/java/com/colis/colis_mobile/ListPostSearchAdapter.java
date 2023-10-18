@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAdapter.PostViewHolder> {
@@ -33,6 +34,8 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
     private Context context;
 
     private View.OnClickListener itemClickListener;
+
+    private static final Logger logger = Logger.getLogger(HomeFragment.class.getName());
 
     public ListPostSearchAdapter(List<PostModel> listPost, Context context) {
         this.listPost = listPost;
@@ -135,9 +138,10 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
 
             // profile  Image info
 
+            logger.info("tentative pour le nom : " + postModel.getUser().getName());
 
-            if (postModel.getProfile().getPhotoProfile() != null) {
-                Picasso.get().load(postModel.getProfile().getPhotoProfile()).transform(new CircleTransformation())
+            if (postModel.getUser().getUrlPhoto() != null) {
+                Picasso.get().load(postModel.getUser().getUrlPhoto()).transform(new CircleTransformation())
                         .into(profilImage, new Callback() {
                             @Override
                             public void onSuccess() {
@@ -154,7 +158,6 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
             }
 
 
-            //
             // profilImage.setImageURI(postModel.getProfile().getPhotoProfile());
             profilImage.setLayoutParams(new LinearLayout.LayoutParams(150, 150));
             profilImage.setPadding(10, 0, 0, 0);
@@ -165,7 +168,7 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
 
             String myDate = LocalDate.now().toString();
 
-            infoText.setText(postModel.getProfile().getFullName() + " \n" +
+            infoText.setText(postModel.getUser().getName() + " \n" +
                     postModel.getRegionDepart() + "->" + postModel.getRegionDestination() + "\n" +
                     postModel.getDateRegionDepart().format(formatter)
             );
