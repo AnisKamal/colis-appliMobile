@@ -87,6 +87,8 @@ public class AddPostFragment extends Fragment {
 
     private String postId = null ;
 
+    private int kiloInitial = 0;
+
     public AddPostFragment() {
     }
 
@@ -135,10 +137,11 @@ public class AddPostFragment extends Fragment {
             villeDestinationEditText.setText(selectedPost.getRegionDestination());
             selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().format(formatter));
             selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().format(formatter));
-            nbreKiloEditText.setText( String.valueOf(selectedPost.getkiloInitial()));
+            nbreKiloEditText.setText(String.valueOf(selectedPost.getKiloRestant()));
             descriptionEditText.setText(selectedPost.getDescription());
-            publierButton.setText("Mettre a jour");
+            publierButton.setText(" Modifier ");
             this.postId = selectedPost.getId();
+            this.kiloInitial = selectedPost.getKiloInitial();
 
             // publierButton.setBackgroundColor(8743);
         }
@@ -331,7 +334,6 @@ public class AddPostFragment extends Fragment {
                                 prixNumber,
                                 deviseSpinner.getSelectedItem().toString(),
                                 nbreKiloInt,
-                                nbreKiloInt,
                                 descriptionEditText.getText().toString(),
                                 true
                                 );
@@ -341,10 +343,14 @@ public class AddPostFragment extends Fragment {
 
                         postModel.setUser(new UserModel(id));
 
-                        if(postId != null){
-                            logger.info("valeur de id " + postId);
+                        if(postId != null)
                             postModel.setId(postId);
+                        if(kiloInitial != 0 ){
+                            logger.info("kilo initiale : " + kiloInitial);
+                            postModel.setKiloInitial(kiloInitial);
                         }
+
+
                         logger.info("mon log "+ postModel.toString());
 
                         postApi.save(postModel).enqueue(new Callback<ResponseBody>() {

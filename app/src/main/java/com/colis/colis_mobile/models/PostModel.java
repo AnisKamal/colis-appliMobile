@@ -34,14 +34,13 @@ public class PostModel  implements Serializable {
     public PostModel() {
     }
 
-    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, Integer kiloInitial, int kiloRestant, String description, boolean activity) {
+    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, int kiloRestant, String description, boolean activity) {
         this.regionDepart = regionDepart;
         this.dateRegionDepart = dateRegionDepart;
         this.regionDestination = regionDestination;
         this.dateRegionDestination = dateRegionDestination;
         this.prix = prix;
         this.devise = devise;
-        this.kiloInitial = kiloInitial;
         this.kiloRestant = kiloRestant;
         this.description = description;
         this.activity = activity;
