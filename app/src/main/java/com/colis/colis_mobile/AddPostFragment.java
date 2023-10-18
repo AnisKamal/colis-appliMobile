@@ -85,6 +85,8 @@ public class AddPostFragment extends Fragment {
 
     private static final Logger logger = Logger.getLogger(DetailTrajetFragment.class.getName());
 
+    private String postId = null ;
+
     public AddPostFragment() {
     }
 
@@ -125,15 +127,19 @@ public class AddPostFragment extends Fragment {
         villeDestinationEditText.setAdapter(adapter1);
 
         if(bundle != null){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
             PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
             prixEditText.setText(selectedPost.getPrix().toString());
             villeDepartEditText.setText(selectedPost.getRegionDepart());
             villeDestinationEditText.setText(selectedPost.getRegionDestination());
-            selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().toString());
-            selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().toString());
+            selectedDateTimeTextViewDepart.setText(selectedPost.getDateRegionDepart().format(formatter));
+            selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().format(formatter));
             nbreKiloEditText.setText( String.valueOf(selectedPost.getkiloInitial()));
             descriptionEditText.setText(selectedPost.getDescription());
             publierButton.setText("Mettre a jour");
+            this.postId = selectedPost.getId();
+
             // publierButton.setBackgroundColor(8743);
         }
 
@@ -335,6 +341,10 @@ public class AddPostFragment extends Fragment {
 
                         postModel.setUser(new UserModel(id));
 
+                        if(postId != null){
+                            logger.info("valeur de id " + postId);
+                            postModel.setId(postId);
+                        }
                         logger.info("mon log "+ postModel.toString());
 
                         postApi.save(postModel).enqueue(new Callback<ResponseBody>() {

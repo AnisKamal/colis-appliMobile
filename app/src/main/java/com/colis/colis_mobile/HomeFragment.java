@@ -63,7 +63,6 @@ public class HomeFragment extends Fragment {
     AutoCompleteTextView autoCompleteTextViewDepart, autoCompleteTextViewDestination;
 
 
-
     private static final Logger logger = Logger.getLogger(HomeFragment.class.getName());
 
     @SuppressLint("MissingInflatedId")

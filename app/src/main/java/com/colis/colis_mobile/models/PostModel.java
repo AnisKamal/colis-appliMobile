@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 public class PostModel  implements Serializable {
 
+    private String id ;
+
     private  String regionDepart ;
 
     private  LocalDateTime dateRegionDepart ;
@@ -144,6 +146,14 @@ public class PostModel  implements Serializable {
 
     public void setKiloRestant(int kiloRestant) {
         this.kiloRestant = kiloRestant;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public UserModel getUser() {
