@@ -2,6 +2,8 @@ package com.colis.colis_mobile;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -33,6 +36,7 @@ import com.colis.colis_mobile.api.PostApi;
 import com.colis.colis_mobile.api.RetrofitService;
 import com.colis.colis_mobile.models.Devise;
 import com.colis.colis_mobile.models.PostModel;
+import com.colis.colis_mobile.models.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonPrimitive;
@@ -325,6 +329,13 @@ public class AddPostFragment extends Fragment {
                                 descriptionEditText.getText().toString(),
                                 true
                                 );
+
+                        SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
+                        String id = sharedPreferences.getString("id", "");
+
+                        logger.info("mon id est : " + id);
+                        postModel.setUser(new UserModel(id));
+
                         logger.info("mon log "+ postModel.toString());
 
                         postApi.save(postModel).enqueue(new Callback<ResponseBody>() {

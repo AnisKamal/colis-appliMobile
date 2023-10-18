@@ -152,6 +152,7 @@ public class WelcomActivity extends AppCompatActivity {
                             editor.putString("email", myuser.getEmail());
                             editor.putString("name", myuser.getName());
                             editor.putString("photo", myuser.getUrlPhoto());
+                            editor.putString("id", myuser.getId());
                             editor.apply();
 
                             navigateToMain();
