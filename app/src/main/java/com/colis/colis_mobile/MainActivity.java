@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             finish();
                         }   });
+                    Intent intent2 = new Intent(MainActivity.this, WelcomActivity.class);
+                    startActivity(intent2);
                     item.setChecked(true);
                 }
             return false;

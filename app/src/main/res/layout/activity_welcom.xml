@@ -31,33 +31,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="50dp">
         <Button
             android:layout_width="275dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/sky_blue_1"
-            android:text="S'inscrire"
-            android:textSize="25dp"
-            android:id="@+id/logout"
-            />
-        <Button
-            android:layout_width="275dp"
-            android:layout_height="60dp"
-            android:backgroundTint="#E5E5E5"
             android:text="Continuer avec Google "
-            android:textColor="@color/black"
-            android:textSize="16dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"
             android:drawableLeft="@drawable/google_logo"
             android:id="@+id/googleAuth"
-            />
-        <TextView
-            android:layout_width="275dp"
-            android:layout_height="60dp"
-            android:text="S'identifier"
-            android:textAlignment="center"
-            android:textSize="25dp"
-            android:textColor="@color/sky_blue_1"
-            android:id="@+id/identifyTextId"
             />
         </LinearLayout>
 

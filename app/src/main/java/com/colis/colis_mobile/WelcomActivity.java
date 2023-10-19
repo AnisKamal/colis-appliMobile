@@ -54,8 +54,7 @@ import retrofit2.Response;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WelcomActivity extends AppCompatActivity {
 
-    TextView identifierText ;
-    Button googleButton , logout;
+    Button googleButton ;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
 
@@ -67,9 +66,7 @@ public class WelcomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcom);
 
-        identifierText = findViewById(R.id.identifyTextId);
         googleButton = findViewById(R.id.googleAuth);
-        logout = findViewById(R.id.logout);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail().build();
@@ -78,13 +75,6 @@ public class WelcomActivity extends AppCompatActivity {
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
-        identifierText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent loginIntent = new Intent(WelcomActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
-        });
 
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,17 +83,6 @@ public class WelcomActivity extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        finish();
-                    }
-                });
-            }
-        });
 
     }
 
