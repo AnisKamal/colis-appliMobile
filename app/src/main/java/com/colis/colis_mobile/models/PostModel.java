@@ -28,13 +28,15 @@ public class PostModel  implements Serializable {
 
     private boolean activity;
 
+    private String NTelephone;
+
 
     private UserModel user;
 
     public PostModel() {
     }
 
-    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, int kiloRestant, String description, boolean activity) {
+    public PostModel(String regionDepart, LocalDateTime dateRegionDepart, String regionDestination, LocalDateTime dateRegionDestination, Double prix, String devise, int kiloRestant, String description, boolean activity,String NTelephone) {
         this.regionDepart = regionDepart;
         this.dateRegionDepart = dateRegionDepart;
         this.regionDestination = regionDestination;
@@ -44,6 +46,7 @@ public class PostModel  implements Serializable {
         this.kiloRestant = kiloRestant;
         this.description = description;
         this.activity = activity;
+        this.NTelephone = NTelephone;
     }
 
     public boolean isActivity() {
@@ -153,6 +156,14 @@ public class PostModel  implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNTelephone() {
+        return NTelephone;
+    }
+
+    public void setNTelephone(String NTelephone) {
+        this.NTelephone = NTelephone;
     }
 
     public UserModel getUser() {

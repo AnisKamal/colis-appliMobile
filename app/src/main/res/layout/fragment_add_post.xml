@@ -142,9 +142,21 @@
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:id="@+id/deviseSpinnerId"
+                        android:background="@drawable/rounded_edit_text_form"
                         />
 
                 </LinearLayout>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_edit_text_form"
+                    android:hint=" saisir votre numéro de telephone "
+                    android:paddingLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:inputType="phone"
+                    android:id="@+id/phoneId"
+                    />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -169,6 +181,8 @@
                     android:layout_marginTop="10dp"
                     android:id="@+id/publierBtnId"
                     />
+
+
 
             </LinearLayout>
 

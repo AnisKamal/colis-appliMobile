@@ -78,7 +78,7 @@ public class ContactFragment extends Fragment {
 
             fullName.setText(selectedPost.getUser().getName());
 
-            //numeroText.setText(selectedPost.getProfile().getNTelephone());
+            numeroText.setText(selectedPost.getNTelephone());
 
         copieButton.setOnClickListener(copie -> {
             String textCopie = numeroText.getText().toString() ;

@@ -1,5 +1,6 @@
 package com.colis.colis_mobile;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -77,7 +78,7 @@ public class AddPostFragment extends Fragment {
     private TextView selectedDateTimeTextViewDepart, selectedDateTimeTextViewDestination;
 
     private Spinner deviseSpinner ;
-    private EditText prixEditText, nbreKiloEditText,  descriptionEditText;
+    private EditText prixEditText, nbreKiloEditText,  descriptionEditText, NTelephoneEditText;
 
     private AutoCompleteTextView villeDepartEditText, villeDestinationEditText;
 
@@ -92,6 +93,7 @@ public class AddPostFragment extends Fragment {
     public AddPostFragment() {
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -110,6 +112,7 @@ public class AddPostFragment extends Fragment {
         villeDepartEditText = view.findViewById(R.id.villeDepartFieldId);
         villeDestinationEditText = view.findViewById(R.id.villeDestinationFieldId);
         descriptionEditText = view.findViewById(R.id.descriptionFieldId);
+        NTelephoneEditText = view.findViewById(R.id.phoneId);
 
         ArrayAdapter<Devise> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, Devise.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -139,6 +142,7 @@ public class AddPostFragment extends Fragment {
             selectedDateTimeTextViewDestination.setText(selectedPost.getDateRegionDestination().format(formatter));
             nbreKiloEditText.setText(String.valueOf(selectedPost.getKiloRestant()));
             descriptionEditText.setText(selectedPost.getDescription());
+            NTelephoneEditText.setText(selectedPost.getNTelephone());
             publierButton.setText(" Modifier ");
             this.postId = selectedPost.getId();
             this.kiloInitial = selectedPost.getKiloInitial();
@@ -287,6 +291,7 @@ public class AddPostFragment extends Fragment {
                 String prix = prixEditText.getText().toString();
                 String dateDepart = selectedDateTimeTextViewDepart.getText().toString();
                 String dateDestination = selectedDateTimeTextViewDestination.getText().toString();
+                String NTelephone = NTelephoneEditText.getText().toString();
                 if(villeDepart.isEmpty() || !recommandations.contains(villeDepart)){
                     villeDepartEditText.setError("veuillez saisir un pays de depart correct");
                     Toast.makeText(getContext(), "Veuillez saisir un pays  de depart", Toast.LENGTH_SHORT).show();
@@ -308,6 +313,9 @@ public class AddPostFragment extends Fragment {
                     isValid = false;
                 }  if (!dateDestination.matches(dateTimeRegex)) {
                     Toast.makeText(getContext(), "Veuillez saisir la date et heure de destination", Toast.LENGTH_SHORT).show();
+                    isValid = false;
+                } if(NTelephone.isEmpty()){
+                    Toast.makeText(getContext(), "Veuillez saisir votre numero de telephone", Toast.LENGTH_SHORT).show();
                     isValid = false;
                 }
 
@@ -335,7 +343,8 @@ public class AddPostFragment extends Fragment {
                                 deviseSpinner.getSelectedItem().toString(),
                                 nbreKiloInt,
                                 descriptionEditText.getText().toString(),
-                                true
+                                true,
+                                NTelephoneEditText.getText().toString()
                                 );
 
                         SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
