@@ -70,13 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new PostManagementFragment());
                     item.setChecked(true);
                 }else if (id == R.id.setting){
-                    gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            finish();
-                        }   });
-                    Intent intent2 = new Intent(MainActivity.this, WelcomActivity.class);
-                    startActivity(intent2);
+                    replaceFragment(new SettingsFragment());
                     item.setChecked(true);
                 }
             return false;
