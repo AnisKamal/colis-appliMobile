@@ -66,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new HomeFragment());
                     item.setChecked(true);
                 }
-                else if (id == R.id.chatId){
-                    replaceFragment(new ChatFragment());
-                    item.setChecked(true);
-                }
                 else if (id == R.id.luggage){
                     replaceFragment(new PostManagementFragment());
                     item.setChecked(true);

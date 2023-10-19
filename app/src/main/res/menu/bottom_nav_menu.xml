@@ -8,12 +8,6 @@
         android:icon="@drawable/ic_outline_home_24"
         android:title="" />
     <item
-        android:id="@+id/chatId"
-        android:enabled="true"
-        android:icon="@drawable/ic_outline_chat_24"
-        android:title=""
-        />
-    <item
         android:id="@+id/luggage"
         android:title=""
         android:icon="@drawable/ic_outline_luggage_24"
