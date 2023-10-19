@@ -1,4 +1,5 @@
 package com.colis.colis_mobile;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +16,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.colis.colis_mobile.databinding.ActivityMainBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,7 +32,10 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
+    GoogleSignInClient gsc;
+    GoogleSignInOptions gso;
 
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +44,18 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build();
+
+        gsc = GoogleSignIn.getClient(this, gso);
+
+        mGoogleSignInClient = GoogleSignIn.getClient(getApplicationContext(),gso);
+
+        if(!isUserAuthenticated()){
+            Intent intent = new Intent(MainActivity.this, WelcomActivity.class);
+            startActivity(intent);
+        }
 
         replaceFragment(new HomeFragment());
 
@@ -51,12 +74,16 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new PostManagementFragment());
                     item.setChecked(true);
                 }else if (id == R.id.setting){
-                    //replaceFragment();
+                    gsc.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            finish();
+                        }   });
                     item.setChecked(true);
                 }
-
             return false;
-        });
+
+    });
     }
 
     private void replaceFragment(Fragment fragment){
@@ -66,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-
+    private boolean isUserAuthenticated() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+        return account != null;
+    }
 
 }
