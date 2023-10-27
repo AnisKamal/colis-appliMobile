@@ -1,20 +1,39 @@
 package com.colis.colis_mobile;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,6 +63,9 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -55,6 +77,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import okhttp3.ResponseBody;
@@ -71,24 +94,26 @@ import retrofit2.Response;
 public class AddPostFragment extends Fragment {
 
     private DatePickerDialog.OnDateSetListener datePickerListenerDepart, datePickerListenerArrivee;
-    private TimePickerDialog.OnTimeSetListener timePickerListenerDepart, timePickerListenerArrivee ;
+    private TimePickerDialog.OnTimeSetListener timePickerListenerDepart, timePickerListenerArrivee;
     private Calendar calendar;
 
     private ImageButton selectDateTimeButtonDepart, selectDateTimeButtonDestination;
     private TextView selectedDateTimeTextViewDepart, selectedDateTimeTextViewDestination;
 
-    private Spinner deviseSpinner ;
-    private EditText prixEditText, nbreKiloEditText,  descriptionEditText, NTelephoneEditText;
+    private Spinner deviseSpinner;
+    private EditText prixEditText, nbreKiloEditText, descriptionEditText, NTelephoneEditText;
 
     private AutoCompleteTextView villeDepartEditText, villeDestinationEditText;
 
-    private Button publierButton ;
+    private Button publierButton, downloadButton;
 
     private static final Logger logger = Logger.getLogger(DetailTrajetFragment.class.getName());
 
-    private String postId = null ;
+    private String postId = null;
 
     private int kiloInitial = 0;
+
+    PostModel selectedPost;
 
     public AddPostFragment() {
     }
@@ -97,11 +122,11 @@ public class AddPostFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =   inflater.inflate(R.layout.fragment_add_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_post, container, false);
         Bundle bundle = getArguments();
-        selectDateTimeButtonDepart = view.findViewById(R.id.dateTimeDepartId) ;
+        selectDateTimeButtonDepart = view.findViewById(R.id.dateTimeDepartId);
         selectDateTimeButtonDestination = view.findViewById(R.id.dateTimeArriveeId);
-         selectedDateTimeTextViewDepart = view.findViewById(R.id.textDateDepartId);
+        selectedDateTimeTextViewDepart = view.findViewById(R.id.textDateDepartId);
         selectedDateTimeTextViewDestination = view.findViewById(R.id.textDateTimeArrivee);
         prixEditText = view.findViewById(R.id.prixFieldId);
         deviseSpinner = view.findViewById(R.id.deviseSpinnerId);
@@ -113,14 +138,16 @@ public class AddPostFragment extends Fragment {
         villeDestinationEditText = view.findViewById(R.id.villeDestinationFieldId);
         descriptionEditText = view.findViewById(R.id.descriptionFieldId);
         NTelephoneEditText = view.findViewById(R.id.phoneId);
+        downloadButton = view.findViewById(R.id.downloadId);
 
-        ArrayAdapter<Devise> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item, Devise.values());
+        ArrayAdapter<Devise> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, Devise.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         deviseSpinner.setAdapter(adapter);
 
         calendar = Calendar.getInstance();
 
         List<String> recommandations = readTextFile();
+
 
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
                 getContext(),
@@ -131,10 +158,10 @@ public class AddPostFragment extends Fragment {
 
         villeDestinationEditText.setAdapter(adapter1);
 
-        if(bundle != null){
+        if (bundle != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-            PostModel selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
+            selectedPost = (PostModel) bundle.getSerializable("selectedPost2");
             prixEditText.setText(selectedPost.getPrix().toString());
             villeDepartEditText.setText(selectedPost.getRegionDepart());
             villeDestinationEditText.setText(selectedPost.getRegionDestination());
@@ -146,6 +173,9 @@ public class AddPostFragment extends Fragment {
             publierButton.setText(" Modifier ");
             this.postId = selectedPost.getId();
             this.kiloInitial = selectedPost.getKiloInitial();
+
+
+            downloadButton.setVisibility(View.VISIBLE);
 
             // publierButton.setBackgroundColor(8743);
         }
@@ -193,7 +223,7 @@ public class AddPostFragment extends Fragment {
             }
         };
 
-        timePickerListenerArrivee  = new TimePickerDialog.OnTimeSetListener() {
+        timePickerListenerArrivee = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 // Mettre à jour l'heure sélectionnée
@@ -274,6 +304,85 @@ public class AddPostFragment extends Fragment {
                         // La saisie n'est pas un nombre valide, réinitialiser le champ de texte
                         prixEditText.setText("");
                     }
+                }
+            }
+
+        });
+
+        downloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logger.info("Execution starting...");
+                Bitmap originalImage = BitmapFactory.decodeResource(getResources(), R.drawable.post);
+                Bitmap imageWithText = originalImage.copy(Bitmap.Config.ARGB_8888, true);
+
+                Canvas canvas = new Canvas(imageWithText);
+                Paint paint = new Paint();
+                Paint paint2 = new Paint();
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(80);
+                paint2.setColor(Color.BLACK);
+                paint2.setTextSize(120);
+                canvas.drawText("Date depart: " + selectedPost.getDateRegionDepart().toLocalDate(), 1200, 1000, paint);
+                canvas.drawText("Prix : " + selectedPost.getPrix() + selectedPost.getDevise() + "/ Kg", 1200, 1200, paint);
+                canvas.drawText("kilos disponible : " + selectedPost.getKiloRestant()+ " Kg", 1200,1400,paint);
+                canvas.drawText( selectedPost.getRegionDepart() +" -> "+ selectedPost.getRegionDestination(), 200, 400, paint2);
+
+                String fileName = selectedPost.getRegionDepart()+"_"+selectedPost.getRegionDestination()+"_" + UUID.randomUUID() +".jpeg";
+                File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File file = new File(downloadFolder, fileName);
+
+                Uri imageUri = FileProvider.getUriForFile(getContext(), "com.colis.colis_mobile.fileprovider", file);
+
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setDataAndType(imageUri, "image/*");
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    CharSequence name = "MyDownloadChannel";
+                    String description = "Channel for image download notifications";
+                    int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                    NotificationChannel channel = new NotificationChannel("my_download_channel", name, importance);
+                    channel.setDescription(description);
+                    NotificationManager notificationManager =getContext().getSystemService(NotificationManager.class);
+                    notificationManager.createNotificationChannel(channel);
+                }
+
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    imageWithText.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    // No need to manually close 'fos' here, it's automatically handled by try-with-resources.
+                    logger.info("Image saved successfully!");
+
+                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.POST_NOTIFICATIONS}, 100);
+                        logger.info("if condition ;;;");
+                    }else{
+                        logger.info("else execution de :: ");
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "my_download_channel")
+                                .setSmallIcon(R.drawable.post)
+                                .setContentTitle("Image telecharger ")
+                                .setContentText("L'image de votre post est prête à être partagée ")
+                                .setContentIntent(pendingIntent)
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+                        notificationManager.notify(1, builder.build());
+                        logger.info("end of condition : ");
+
+                    }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    logger.info("File not found: " + e.getMessage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    logger.info("IO Error: " + e.getMessage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    logger.info("Unknown Error: " + e.getMessage());
                 }
             }
 
@@ -384,6 +493,8 @@ public class AddPostFragment extends Fragment {
 
             }
         });
+
+
 
 
         return view ;

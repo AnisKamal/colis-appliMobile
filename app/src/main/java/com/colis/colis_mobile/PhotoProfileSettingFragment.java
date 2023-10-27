@@ -126,8 +126,6 @@ public class PhotoProfileSettingFragment extends Fragment {
 
             UserApi userApi = retrofitService.getRetrofit().create(UserApi.class);;
 
-
-
 /*            retrofitService = new RetrofitService();
             userApi = retrofitService.getRetrofit().create(UserApi.class);*/
 

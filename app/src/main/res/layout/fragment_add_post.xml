@@ -18,9 +18,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="vertical"
-            android:background="@color/sky_blue_1">
-
+            android:orientation="horizontal"
+            android:background="@color/sky_blue_1"
+            >
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                android:text=" Telecharger l image "
+                android:backgroundTint="#A1D5D3"
+                android:id="@+id/downloadId"
+                android:visibility="gone"
+                />
         </LinearLayout>
 
         <LinearLayout
