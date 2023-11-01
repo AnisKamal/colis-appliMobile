@@ -2,15 +2,13 @@ package com.colis.colis_mobile.api;
 
 import com.colis.colis_mobile.models.PostModel;
 
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface PostApi {
 
@@ -23,6 +21,9 @@ public interface PostApi {
     @GET("api/v1/posts")
     Call<ResponseBody> findLastPosts();
 
-    @GET("api/v1/posts/{regionDepart}/{regionDestination}")
-    Call<ResponseBody> findPostSearch(@Path("regionDepart") String regionDepart,@Path("regionDestination") String regionDestination);
+   /* @GET("api/v1/posts/{regionDepart}/{regionDestination}")
+    Call<ResponseBody> findPostSearch(@Path("regionDepart") String regionDepart,@Path("regionDestination") String regionDestination);*/
+
+    @GET("api/v1/posts/search")
+    Call<ResponseBody> findPostSearch(@Query("regionDepart") String regionDepart,@Query("regionDestination") String regionDestination );
 }

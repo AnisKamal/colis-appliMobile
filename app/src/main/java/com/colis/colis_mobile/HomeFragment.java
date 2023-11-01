@@ -12,16 +12,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.colis.colis_mobile.api.PostApi;
@@ -30,13 +27,10 @@ import com.colis.colis_mobile.models.PostModel;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -139,18 +133,13 @@ public class HomeFragment extends Fragment {
                 });
 
 
-
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String rDepart = autoCompleteTextViewDepart.getText().toString();
                 String rDestination = autoCompleteTextViewDestination.getText().toString();
 
-                if(rDepart.trim().isEmpty() || rDestination.trim().isEmpty()){
-                    Toast.makeText(getContext(), "Veuillez remplir les deux champs ", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    postApi.findPostSearch(rDepart, rDestination).enqueue(new Callback<ResponseBody>() {
+                    postApi.findPostSearch(rDepart,rDestination).enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             try {
@@ -185,8 +174,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
-
-            }
         });
 
 
