@@ -78,17 +78,21 @@ public class PhotoProfileSettingFragment extends Fragment {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("User", Context.MODE_PRIVATE);
         String urlPhoto = sharedPreferences.getString("photo","");
 
-        Picasso.get().load(urlPhoto).transform(new CircleTransformation()).into(profileImage, new Callback() {
-            @Override
-            public void onSuccess() {
+        if(!urlPhoto.isEmpty()){
+            Picasso.get().load(urlPhoto).transform(new CircleTransformation()).into(profileImage, new Callback() {
+                @Override
+                public void onSuccess() {
 
-            }
+                }
 
-            @Override
-            public void onError(Exception e) {
-                Log.e("Picasso", "Error loading image", e);
-            }
-        });
+                @Override
+                public void onError(Exception e) {
+                    Log.e("Picasso", "Error loading image", e);
+                }
+            });
+        }else{
+            profileImage.setImageResource(R.drawable.utilisateur);
+        }
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
