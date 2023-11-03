@@ -1,6 +1,7 @@
 package com.colis.colis_mobile;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,11 +20,18 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.colis.colis_mobile.models.PostModel;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -168,8 +176,12 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
 
             String myDate = LocalDate.now().toString();
 
+            String drapeauPaysDepart = SearchUnicodeByCountryName(context.getResources(), R.raw.countries_code, postModel.getRegionDepart());
+            String drapeauPaysDestination = SearchUnicodeByCountryName(context.getResources(), R.raw.countries_code, postModel.getRegionDestination());
+
+
             infoText.setText(postModel.getUser().getName() + " \n" +
-                    postModel.getRegionDepart() + "->" + postModel.getRegionDestination() + "\n" +
+                    drapeauPaysDepart + postModel.getRegionDepart() + "->" + drapeauPaysDestination + postModel.getRegionDestination() + "\n" +
                     postModel.getDateRegionDepart().format(formatter)
             );
             infoText.setTextSize(20);
@@ -203,6 +215,30 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
         void onItemClick(PostModel postModel );
     }
 
+    public String SearchUnicodeByCountryName(Resources resources, int rawResourceId, String countryName) {
+        List<String> column5Data = new ArrayList();
+
+        try {
+            InputStream inputStream = resources.openRawResource(rawResourceId);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            CSVReader csvReader = new CSVReaderBuilder(inputStreamReader).withSkipLines(0).build();
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                //  column5Data.add(nextRecord[4]);
+                if(nextRecord[4].equals(countryName)){
+                    return nextRecord[6];
+                }
+            }
+            inputStream.close();
+            inputStreamReader.close();
+            csvReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }
 
 
