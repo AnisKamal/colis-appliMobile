@@ -3,8 +3,7 @@ package com.colis.colis_mobile.models;
 public enum Devise {
     EUR("EUR"),
     USD("USD"),
-    MAD("MAD"),
-    FCFA("FCFA");
+    FC("FC");
 
     String devise;
 

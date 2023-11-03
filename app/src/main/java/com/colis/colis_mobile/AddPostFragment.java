@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -61,6 +62,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -323,10 +327,12 @@ public class AddPostFragment extends Fragment {
                 paint.setTextSize(80);
                 paint2.setColor(Color.BLACK);
                 paint2.setTextSize(120);
+                String drapeauDepart = SearchUnicodeByCountryName(getResources(),R.raw.countries_code,selectedPost.getRegionDepart());
+                String drapeauDestination = SearchUnicodeByCountryName(getResources(),R.raw.countries_code,selectedPost.getRegionDestination());
                 canvas.drawText("Date depart: " + selectedPost.getDateRegionDepart().toLocalDate(), 1200, 1000, paint);
                 canvas.drawText("Prix : " + selectedPost.getPrix() + selectedPost.getDevise() + "/ Kg", 1200, 1200, paint);
                 canvas.drawText("kilos disponible : " + selectedPost.getKiloRestant()+ " Kg", 1200,1400,paint);
-                canvas.drawText( selectedPost.getRegionDepart() +" -> "+ selectedPost.getRegionDestination(), 200, 400, paint2);
+                canvas.drawText( drapeauDepart + selectedPost.getRegionDepart() +" -> " + drapeauDestination  + selectedPost.getRegionDestination(), 200, 400, paint2);
 
                 String fileName = selectedPost.getRegionDepart()+"_"+selectedPost.getRegionDestination()+"_" + UUID.randomUUID() +".jpeg";
                 File downloadFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
@@ -576,5 +582,30 @@ public class AddPostFragment extends Fragment {
         }
 
         return dataList;
+    }
+
+    public String SearchUnicodeByCountryName(Resources resources, int rawResourceId, String countryName) {
+        List<String> column5Data = new ArrayList();
+
+        try {
+            InputStream inputStream = resources.openRawResource(rawResourceId);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            CSVReader csvReader = new CSVReaderBuilder(inputStreamReader).withSkipLines(0).build();
+            String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null) {
+                //  column5Data.add(nextRecord[4]);
+                if(nextRecord[4].equals(countryName)){
+                    return nextRecord[6];
+                }
+            }
+            inputStream.close();
+            inputStreamReader.close();
+            csvReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }
