@@ -188,6 +188,7 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
                     android:id="@+id/publierBtnId"
+                    android:background="@drawable/rounded_edit_text"
                     />
 
 

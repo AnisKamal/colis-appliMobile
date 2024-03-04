@@ -187,7 +187,7 @@ public class ListPostSearchAdapter extends RecyclerView.Adapter<ListPostSearchAd
             infoText.setTextSize(20);
             infoText.setPadding(10, 0, 0, 0);
             infoText.setTextColor(Color.BLACK);
-            infoText.setLayoutParams(new LinearLayout.LayoutParams(400, ViewGroup.LayoutParams.WRAP_CONTENT));
+            infoText.setLayoutParams(new LinearLayout.LayoutParams(600, ViewGroup.LayoutParams.WRAP_CONTENT));
 
             // Prix
 

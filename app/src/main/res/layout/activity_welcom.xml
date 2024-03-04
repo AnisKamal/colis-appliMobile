@@ -41,6 +41,7 @@
             android:textSize="20dp"
             android:drawableLeft="@drawable/google_logo"
             android:id="@+id/googleAuth"
+            android:background="@drawable/rounded_edit_text"
             />
         </LinearLayout>
 
